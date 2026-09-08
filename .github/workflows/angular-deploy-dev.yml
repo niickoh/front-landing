@@ -23,7 +23,7 @@ jobs:
         run: npm i --force
 
       - name: Build Angular
-        run: npm run build -- --configuration production
+        run: npm run build --aot --configuration production
 
       - name: Deploy attempt #1
         id: deploy1
@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
           port: 21
-          local-dir: dist/front-sphere/browser/
+          local-dir: dist/front-landing/browser/
           server-dir: /public_html/upacallstars/
           dangerous-clean-slate: false
           timeout: 120000
@@ -55,8 +55,8 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
           port: 21
-          local-dir: dist/front-sphere/browser/
-          server-dir: /public_html/dev/
+          local-dir: dist/front-landing/browser/
+          server-dir: /public_html/upacallstars/
           dangerous-clean-slate: false
           timeout: 120000
 
@@ -75,8 +75,8 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
           port: 21
-          local-dir: dist/front-sphere/browser/
-          server-dir: /public_html/dev/
+          local-dir: dist/front-landing/browser/
+          server-dir: /public_html/upacallstars/
           dangerous-clean-slate: false
           timeout: 120000
 
