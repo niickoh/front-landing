@@ -1,0 +1,133 @@
+<section class="bg-light pt-32 pb-20 sm:pb-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="text-sm font-semibold tracking-wider text-primary uppercase">Contacto</span>
+      <h1 class="mt-2 text-4xl font-extrabold tracking-tight text-dark sm:text-5xl">
+        Hablemos de tu proyecto
+      </h1>
+      <p class="mt-6 text-lg text-gray-600">
+        Completa el formulario y te responderemos en menos de 24 horas.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5">
+      <aside class="flex flex-col gap-6 lg:col-span-2">
+        <div class="rounded-2xl bg-dark p-8 text-white">
+          <h2 class="text-xl font-semibold">Información de contacto</h2>
+          <ul class="mt-6 space-y-4 text-sm text-gray-300">
+            <li class="flex items-start gap-3">
+              <span class="text-lg text-primary-light">✉</span>
+              <span>contacto&#64;frontlanding.dev</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-lg text-primary-light">☏</span>
+              <span>+56 2 2345 6789</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-lg text-primary-light">⌖</span>
+              <span>Av. Principal 1234, Santiago, Chile</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-white p-8">
+          <h2 class="text-xl font-semibold text-dark">Horario de atención</h2>
+          <ul class="mt-4 space-y-2 text-sm text-gray-600">
+            <li class="flex justify-between"><span>Lunes a Viernes</span><span>09:00 – 18:00</span></li>
+            <li class="flex justify-between"><span>Sábado</span><span>10:00 – 14:00</span></li>
+            <li class="flex justify-between"><span>Domingo</span><span class="text-primary">Cerrado</span></li>
+          </ul>
+        </div>
+      </aside>
+
+      <form
+        class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm lg:col-span-3"
+        (ngSubmit)="onSubmit()"
+        novalidate
+      >
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div class="flex flex-col gap-1.5">
+            <label for="nombre" class="text-sm font-medium text-dark">Nombre *</label>
+            <input
+              pInputText
+              id="nombre"
+              type="text"
+              placeholder="Tu nombre completo"
+              class="w-full"
+              [value]="form().nombre"
+              [attr.aria-invalid]="showError('nombre')"
+              (input)="onTextInput('nombre', $event)"
+              (blur)="markTouched('nombre')"
+            />
+            @if (showError('nombre')) {
+              <p-message severity="error" size="small" variant="simple">{{ errors().nombre }}</p-message>
+            }
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="email" class="text-sm font-medium text-dark">Correo electrónico *</label>
+            <input
+              pInputText
+              id="email"
+              type="email"
+              placeholder="tucorreo@ejemplo.com"
+              class="w-full"
+              [value]="form().email"
+              [attr.aria-invalid]="showError('email')"
+              (input)="onTextInput('email', $event)"
+              (blur)="markTouched('email')"
+            />
+            @if (showError('email')) {
+              <p-message severity="error" size="small" variant="simple">{{ errors().email }}</p-message>
+            }
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-1.5">
+          <label for="asunto" class="text-sm font-medium text-dark">Asunto *</label>
+          <p-select
+            inputId="asunto"
+            [options]="asuntoOptions"
+            [ngModel]="form().asunto"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="updateField('asunto', $event); markTouched('asunto')"
+            placeholder="Selecciona un asunto"
+            styleClass="w-full"
+            [attr.aria-invalid]="showError('asunto')"
+          />
+          @if (showError('asunto')) {
+            <p-message severity="error" size="small" variant="simple">{{ errors().asunto }}</p-message>
+          }
+        </div>
+
+        <div class="mt-6 flex flex-col gap-1.5">
+          <label for="mensaje" class="text-sm font-medium text-dark">Mensaje *</label>
+          <textarea
+            pTextarea
+            id="mensaje"
+            rows="5"
+            placeholder="Cuéntanos sobre tu proyecto (mínimo 10 caracteres)"
+            class="w-full"
+            [value]="form().mensaje"
+            [attr.aria-invalid]="showError('mensaje')"
+            (input)="onTextInput('mensaje', $event)"
+            (blur)="markTouched('mensaje')"
+          ></textarea>
+          @if (showError('mensaje')) {
+            <p-message severity="error" size="small" variant="simple">{{ errors().mensaje }}</p-message>
+          }
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <p-button
+            type="submit"
+            label="Enviar mensaje"
+            icon="pi pi-send"
+            [rounded]="true"
+            size="large"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
