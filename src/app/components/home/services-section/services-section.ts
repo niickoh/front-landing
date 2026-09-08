@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { appContent } from '../../../content.config';
+import { Component, inject } from '@angular/core';
+import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-services-section',
   templateUrl: './services-section.html',
 })
 export class ServicesSection {
-  protected readonly services = appContent.services;
+  private readonly content = inject(ContentService);
+  protected readonly services = this.content.value.services;
 }

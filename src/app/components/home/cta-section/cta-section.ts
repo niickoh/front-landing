@@ -3,7 +3,7 @@ import { Dialog } from 'primeng/dialog';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { NotificationService } from '../../../services/notification.service';
-import { appContent } from '../../../content.config';
+import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-cta-section',
@@ -12,7 +12,8 @@ import { appContent } from '../../../content.config';
 })
 export class CtaSection {
   private readonly notifications = inject(NotificationService);
-  protected readonly cta = appContent.cta;
+  private readonly content = inject(ContentService);
+  protected readonly cta = this.content.value.cta;
 
   protected readonly dialogVisible = signal(false);
   protected readonly email = signal('');

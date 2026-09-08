@@ -1,0 +1,307 @@
+{
+  "brand": {
+    "short": "UPAC",
+    "full": "UPAC Allstars"
+  },
+  "header": {
+    "logo": {
+      "src": "logoupac.webp",
+      "alt": "UPAC Allstars Logo",
+      "href": "/"
+    }
+  },
+  "navigation": [
+    { "label": "Inicio", "path": "/" },
+    { "label": "Quiénes Somos", "path": "/quienes-somos" },
+    { "label": "Videos", "path": "/videos" }
+  ],
+  "hero": {
+    "badge": "UPAC Allstars",
+    "eyebrow": "25 años formando campeones",
+    "title": "La pasión no se mira.",
+    "titleAccent": "Se vive.",
+    "subtitle": "Cheerleading, disciplina y familia. En UPAC cada entrenamiento nos lleva más alto.",
+    "primaryCta": "Ver videos",
+    "secondaryCta": "Conoce nuestra familia",
+    "proofLabel": "Desde 2002",
+    "proofText": "Una historia escrita en equipo.",
+    "scrollLabel": "Descubre UPAC",
+    "mediaType": "video",
+    "imageSrc": "hero-bg.png",
+    "videoSrc": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "youtubeUrl": "https://youtu.be/6IuVQKc0qbg?si=wOTpnh6UBkwTU7MH",
+    "startSeconds": 15,
+    "playSeconds": 30,
+    "autoplay": true,
+    "muted": true,
+    "loop": true,
+    "fallbackText": "El reproductor no está disponible en este momento."
+  },
+  "teamsSection": {
+    "title": "Nuestros Equipos",
+    "teams": [
+      {
+        "id": "infinity",
+        "baseName": "Infinity",
+        "displayName": "Infinity Panthers",
+        "logo": "infinity-panthers.png"
+      },
+      {
+        "id": "cherry",
+        "baseName": "Cherry",
+        "displayName": "Cherry Panthers",
+        "logo": "cherry-panthers.jpeg"
+      },
+      {
+        "id": "galaxy",
+        "baseName": "Galaxy",
+        "displayName": "Galaxy Panthers",
+        "logo": "galaxy-panthers.png"
+      },
+      {
+        "id": "miss",
+        "baseName": "Miss",
+        "displayName": "Miss Panthers",
+        "logo": "miss-panther.webp"
+      },
+      {
+        "id": "pink",
+        "baseName": "Pink",
+        "displayName": "Pink Panthers",
+        "logo": "pink-panthers.jpeg"
+      },
+      {
+        "id": "sparkles",
+        "baseName": "Sparkles",
+        "displayName": "Sparkles Panthers",
+        "logo": "sparkles-panthers.jpeg"
+      }
+    ]
+  },
+  "services": [
+    {
+      "icon": "🤝",
+      "title": "Trabajo en equipo",
+      "description": "Somos un equipo humano que trabaja con compromiso, organización y colaboración para formar atletas integrales en el cheerleading.",
+      "tags": ["Cheer", "Disciplina", "Respeto"]
+    },
+    {
+      "icon": "🛡️",
+      "title": "Buenas prácticas",
+      "description": "Promovemos entrenamientos seguros, rutinas bien ejecutadas y una cultura que prioriza la protección, la técnica y la confianza.",
+      "tags": ["Seguridad", "Rendimiento", "Cuidado"]
+    },
+    {
+      "icon": "💪",
+      "title": "Desarrollo integral",
+      "description": "Fortalecemos el rendimiento deportivo y personal, impulsando liderazgo, disciplina y crecimiento dentro y fuera de la pista.",
+      "tags": ["Liderazgo", "Confianza", "Crecimiento"]
+    }
+  ],
+  "aboutSection": {
+    "eyebrow": "Quiénes Somos",
+    "title": "Historia, equipo y propósito",
+    "subtitle": "Una familia que crece dentro y fuera de la pista.",
+    "description": "UPAC Allstars es una comunidad de atletas, entrenadores y familias unidas por el cheerleading. Entrenamos con propósito, celebramos cada avance y construimos un espacio donde la pasión se transforma en crecimiento.",
+    "placeholderImage": "https://placehold.co/600x600/0b0b0f/d4af37?text=UPAC"
+  },
+  "teamSection": {
+    "title": "Nuestro Equipo",
+    "subtitle": "Personas que acompañan cada salto, rutina y desafío.",
+    "members": [
+      {
+        "id": "coach-cesar",
+        "name": "Cesar Aracena",
+        "role": "Fundador & Head Coach",
+        "photo": "https://placehold.co/600x600/0b0b0f/d4af37?text=CA",
+        "bio": "Lidera el desarrollo deportivo y humano de nuestros equipos con experiencia y visión.",
+        "specialty": "Dirección deportiva",
+        "badge": "Staff oficial",
+        "featured": true
+      },
+      {
+        "id": "coach-marcos",
+        "name": "Marcos P.",
+        "role": "Head Coach & Coreografía",
+        "photo": "https://placehold.co/600x600/0b0b0f/f8f9fa?text=MP",
+        "bio": "Convierte la técnica, la música y la energía del equipo en rutinas memorables.",
+        "specialty": "Coreografía",
+        "badge": "Staff oficial",
+        "featured": false
+      },
+      {
+        "id": "staff-diego",
+        "name": "Diego R.",
+        "role": "Assistant Coach",
+        "photo": "https://placehold.co/600x600/141419/d4af37?text=DR",
+        "bio": "Acompaña el progreso de cada atleta con foco en técnica, confianza y compañerismo.",
+        "specialty": "Técnica y formación",
+        "badge": "Staff oficial",
+        "featured": false
+      }
+    ]
+  },
+  "valuesSection": {
+    "eyebrow": "Nuestros valores",
+    "title": "Lo que nos define",
+    "items": [
+      {
+        "id": "disciplina",
+        "icon": "🎯",
+        "title": "Disciplina",
+        "description": "Entrenamos con constancia y enfoque para mejorar cada rutina."
+      },
+      {
+        "id": "seguridad",
+        "icon": "🛡️",
+        "title": "Seguridad",
+        "description": "Priorizamos técnica y prevención para un progreso responsable."
+      },
+      {
+        "id": "equipo",
+        "icon": "🤝",
+        "title": "Trabajo en equipo",
+        "description": "Crecemos juntos, confiando en cada integrante de la familia UPAC."
+      },
+      {
+        "id": "pasion",
+        "icon": "❤️",
+        "title": "Pasión",
+        "description": "Vivimos el cheer con energía, entrega y orgullo UPAC."
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Hablemos",
+    "title": "¿Listo para ser parte de UPAC Allstars?",
+    "description": "Súmate a una comunidad con historia, pasión y alto nivel competitivo. En UPAC Allstars encontrarás formación, compañerismo y desafíos que te harán crecer en cada entrenamiento. Escríbenos y da el primer paso para convertirte en parte de la familia Panthers.",
+    "button": "Quiero unirme",
+    "dialogTitle": "Solicita tu contacto",
+    "dialogDescription": "Ingresa tu correo electrónico y nuestro equipo se pondrá en contacto contigo.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tucorreo@ejemplo.com",
+    "emailRequired": "El correo electrónico es obligatorio.",
+    "emailInvalid": "Ingresa un correo electrónico válido.",
+    "cancel": "Cancelar",
+    "send": "Enviar"
+  },
+  "contactSection": {
+    "title": "Contacto UPAC Allstars",
+    "subtitle": "¿Quieres ser parte del equipo? Escríbenos y te orientamos en el proceso de ingreso.",
+    "channels": {
+      "whatsapp": "+56 9 0000 0000",
+      "email": "contacto@upacallstars.cl",
+      "instagram": "https://instagram.com/upacallstars",
+      "address": "Santiago, Chile"
+    },
+    "cta": { "label": "Quiero ser parte", "href": "#contact-form" }
+  },
+  "footer": {
+    "navigationTitle": "Navegación",
+    "contactTitle": "Contacto",
+    "description": "Formamos atletas de cheerleading con una identidad sólida, disciplina y pasión para alcanzar el siguiente nivel.",
+    "email": "upacallstarschile@gmail.com",
+    "phone": "+56 9 3520 7988",
+    "location": "Dresden #4288, San Miguel, Santiago de Chile",
+    "slogan": "Amor, familia y pasión",
+    "copyright": "Todos los derechos reservados."
+  },
+  "videos": {
+    "eyebrow": "Videos",
+    "title": "Rutinas y Campeonatos UPAC",
+    "subtitle": "Revive la energía, el esfuerzo y la pasión de nuestros equipos en cada presentación.",
+    "fallbackDescription": "Video de UPAC Allstars disponible para reproducir.",
+    "events": [
+      {
+        "id": "showpremier",
+        "title": "SHOWPREMIER",
+        "thumbnail": "https://placehold.co/900x500/0b0b0f/d4af37?text=SHOWPREMIER",
+        "youtubeLinks": [
+          {
+            "url": "https://youtu.be/T3IqEoBIkjk?si=Wk5fRr6pG3BR8HHH",
+            "title": "Rutina en SHOWPREMIER",
+            "description": "Presentación de nuestros atletas en una jornada llena de energía."
+          },
+          {
+            "url": "https://youtu.be/rfNBzZVlSj0?si=oLXuGSEtwtY8RmB-",
+            "title": "Presentación Allstars",
+            "description": "Trabajo en equipo, técnica y pasión sobre la pista."
+          },
+          {
+            "url": "https://youtu.be/WzJ4gzK4V20?si=sFh9iHgLd5MM95o1",
+            "title": "Rutina competitiva",
+            "description": "Una muestra del compromiso que ponemos en cada entrenamiento."
+          },
+          {
+            "url": "https://youtu.be/7xCBBFG7bRo?si=7A5-x1lsk9U3gr-q",
+            "title": "Momentos de competencia",
+            "description": "La concentración y la energía de UPAC en acción."
+          },
+          {
+            "url": "https://youtu.be/6miojajFkfE?si=6RzTbjeG8TS-KIyc",
+            "title": "Highlights UPAC",
+            "description": "Momentos destacados de una temporada inolvidable."
+          },
+          {
+            "url": "https://youtu.be/WGVXe3Uf-V4?si=nCeDf6jXawTE2Umc",
+            "title": "Orgullo de equipo",
+            "description": "Celebramos la unión y el crecimiento de nuestra familia."
+          },
+          {
+            "url": "https://youtu.be/5Fd9nlxav5s?si=IS-jqZzE4Dai-hfr",
+            "title": "En la pista",
+            "description": "Disciplina, seguridad y pasión en cada movimiento."
+          },
+          {
+            "url": "https://youtu.be/proS-JOQZjM?si=5e_MyBe0_uTY35O_",
+            "title": "Show Allstars",
+            "description": "La energía UPAC que nos inspira a superar nuestros límites."
+          },
+          {
+            "url": "https://youtu.be/XuX5L3agugc?si=xuclaZf0Xbx6OLIj",
+            "title": "Performance Panthers",
+            "description": "Una presentación construida con confianza y compañerismo."
+          },
+          {
+            "url": "https://youtu.be/dhffmGMpKkQ?si=LS-LlCpfCnJ3LJ0p",
+            "title": "Rutina de temporada",
+            "description": "El resultado de entrenar con constancia y propósito."
+          },
+          {
+            "url": "https://youtu.be/M5byhOf8L6k?si=xSo-PkOjCN9TMrA-",
+            "title": "UPAC en movimiento",
+            "description": "Una mirada a la fuerza y coordinación de nuestros equipos."
+          },
+          {
+            "url": "https://youtu.be/w1S4OH2ZTws?si=2Nva_TEOfsJvemoL",
+            "title": "Memorias de campeonato",
+            "description": "Instantes que quedan en la historia de nuestra familia."
+          },
+          {
+            "url": "https://youtu.be/6IuVQKc0qbg?si=wOTpnh6UBkwTU7MH",
+            "title": "Presentación principal",
+            "description": "Una rutina para vivir la pasión del cheerleading UPAC."
+          },
+          {
+            "url": "https://youtu.be/JsUzAqtf7ts?si=p9wewMBaLuP7hbeL",
+            "title": "Cierre de campeonato",
+            "description": "Cerramos cada desafío con orgullo, alegría y unión."
+          }
+        ]
+      },
+      {
+        "id": "showpremier-2",
+        "title": "SHOWPREMIER",
+        "thumbnail": "https://placehold.co/900x500/0b0b0f/d4af37?text=SHOWPREMIER",
+        "youtubeLinks": [
+          {
+            "url": "https://youtu.be/JsUzAqtf7ts?si=p9wewMBaLuP7hbeL",
+            "title": "Cierre de campeonato",
+            "description": "Cerramos cada desafío con orgullo, alegría y unión."
+          }
+        ]
+      }
+    ],
+    "items": []
+  }
+}

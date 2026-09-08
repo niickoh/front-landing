@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
-import { appContent } from '../../../content.config';
+import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-hero',
@@ -10,7 +10,8 @@ import { appContent } from '../../../content.config';
   templateUrl: './hero.html',
 })
 export class Hero {
-  protected readonly hero = appContent.hero;
+  private readonly content = inject(ContentService);
+  protected readonly hero = this.content.value.hero;
 
   constructor(private readonly sanitizer: DomSanitizer) {}
 

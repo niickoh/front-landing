@@ -7,7 +7,7 @@ import { Select } from 'primeng/select';
 import { Message } from 'primeng/message';
 import { ContactService } from '../../services/contact.service';
 import { NotificationService } from '../../services/notification.service';
-import { appContent } from '../../content.config';
+import { ContentService } from '../../services/content.service';
 
 interface ContactFormModel {
   nombre: string;
@@ -44,7 +44,8 @@ export class Contacto {
   private readonly contactService = inject(ContactService);
   private readonly notifications = inject(NotificationService);
 
-  protected readonly contactSection = appContent.contactSection;
+  private readonly content = inject(ContentService);
+  protected readonly contactSection = this.content.value.contactSection;
 
   protected readonly experienciaOptions = [
     { label: 'Principiante', value: 'principiante' },

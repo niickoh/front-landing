@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { appContent } from '../../content.config';
+import type { AppContent } from '../../content.config';
+import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-videos',
@@ -9,13 +10,14 @@ import { appContent } from '../../content.config';
   templateUrl: './videos.html',
 })
 export class Videos {
-  protected readonly videos = appContent.videos;
-  protected selectedEventId: string = appContent.videos.events[0]?.id ?? '';
+  private readonly content = inject(ContentService);
+  protected readonly videos = this.content.value.videos;
+  protected selectedEventId: string = this.videos.events[0]?.id ?? '';
   protected readonly videoError = signal(false);
 
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  protected get selectedEvent(): (typeof appContent.videos.events)[number] | undefined {
+  protected get selectedEvent(): AppContent['videos']['events'][number] | undefined {
     return (
       this.videos.events.find((event) => event.id === this.selectedEventId) ?? this.videos.events[0]
     );
