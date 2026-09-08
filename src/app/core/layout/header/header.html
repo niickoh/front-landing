@@ -1,11 +1,22 @@
-<header class="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-dark/80 backdrop-blur-md">
+<header
+  class="fixed top-0 left-0 z-50 w-full border-b border-[#2c2c36] bg-[#0b0b0f]/90 backdrop-blur-md"
+>
+  <div class="h-1 w-full bg-gradient-to-r from-red-700 via-red-500 to-[#d4af37]"></div>
+
   <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-    <a routerLink="/" class="flex items-center gap-2" (click)="closeMenu()">
-      <span class="flex h-8 w-8 items-center justify-center rounded-md bg-primary font-bold text-white">
-        FL
+    <a [routerLink]="header.logo.href" class="flex items-center gap-2" (click)="closeMenu()">
+      <img
+        [src]="header.logo.src"
+        [alt]="header.logo.alt"
+        class="h-10 w-auto rounded-md object-contain"
+      />
+      <span class="hidden text-lg font-bold tracking-tight text-white sm:block">
+        {{ brand.full }}
       </span>
-      <span class="text-lg font-bold tracking-tight text-white">
-        Front<span class="text-primary-light">Landing</span>
+      <span
+        class="hidden rounded-full border border-[#d4af37] bg-[#d4af37]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#d4af37] sm:inline-block"
+      >
+        25 años
       </span>
     </a>
 
@@ -14,7 +25,7 @@
         <li>
           <a
             [routerLink]="item.path"
-            routerLinkActive="text-primary-light"
+            routerLinkActive="text-[#d4af37]"
             [routerLinkActiveOptions]="{ exact: item.path === '/' }"
             class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
           >
@@ -40,25 +51,41 @@
       (click)="toggleMenu()"
     >
       @if (menuOpen()) {
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
       } @else {
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
         </svg>
       }
     </button>
   </nav>
 
   @if (menuOpen()) {
-    <div class="border-t border-white/10 bg-dark md:hidden">
+    <div class="border-t border-[#2c2c36] bg-[#0b0b0f] md:hidden">
       <ul class="space-y-1 px-4 py-3">
         @for (item of navItems; track item.path) {
           <li>
             <a
               [routerLink]="item.path"
-              routerLinkActive="bg-primary/20 text-primary-light"
+              routerLinkActive="bg-primary/20 text-[#d4af37]"
               [routerLinkActiveOptions]="{ exact: item.path === '/' }"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/10 hover:text-white"
               (click)="closeMenu()"

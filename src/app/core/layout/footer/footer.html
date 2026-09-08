@@ -1,50 +1,60 @@
-<footer class="bg-dark text-gray-400">
+<footer class="border-t border-[#2c2c36] bg-[#0b0b0f] text-[#d6d6dc]">
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       <div>
-        <div class="flex items-center gap-2">
-          <span class="flex h-8 w-8 items-center justify-center rounded-md bg-primary font-bold text-white">
-            FL
-          </span>
+        <a class="flex items-center gap-2">
+          <img
+        [src]="header.logo.src"
+        [alt]="header.logo.alt"
+        class="h-10 w-auto rounded-md object-contain"
+      />
           <span class="text-lg font-bold text-white">
-            Front<span class="text-primary-light">Landing</span>
+            {{ brand.full }}
           </span>
-        </div>
+        </a>
         <p class="mt-4 text-sm leading-relaxed">
-          Construimos experiencias web modernas, rápidas y accesibles con las mejores prácticas de
-          Angular.
+          {{ footer.description }}
+        </p>
+        <p class="mt-5 text-sm font-semibold tracking-wide text-[#f6e7a9]">
+          {{ footer.slogan }}
         </p>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold tracking-wider text-white uppercase">Navegación</h3>
+        <h3 class="text-sm font-semibold tracking-[0.2em] text-white uppercase">
+          {{ footer.navigationTitle }}
+        </h3>
         <ul class="mt-4 space-y-2 text-sm">
-          <li><a routerLink="/" class="transition-colors hover:text-white">Inicio</a></li>
-          <li>
-            <a routerLink="/quienes-somos" class="transition-colors hover:text-white">Quiénes Somos</a>
-          </li>
-          <li><a routerLink="/contacto" class="transition-colors hover:text-white">Contacto</a></li>
+          @for (item of navigation; track item.path) {
+            <li>
+              <a [routerLink]="item.path" class="transition-colors hover:text-white">
+                {{ item.label }}
+              </a>
+            </li>
+          }
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold tracking-wider text-white uppercase">Contacto</h3>
+        <h3 class="text-sm font-semibold tracking-[0.2em] text-white uppercase">
+          {{ footer.contactTitle }}
+        </h3>
         <ul class="mt-4 space-y-2 text-sm">
           <li class="flex items-center gap-2">
-            <span class="text-primary-light">✉</span> contacto&#64;frontlanding.dev
+            <span class="text-primary-light">✉</span> {{ footer.email }}
           </li>
           <li class="flex items-center gap-2">
-            <span class="text-primary-light">☏</span> +56 2 2345 6789
+            <span class="text-primary-light">☏</span> {{ footer.phone }}
           </li>
           <li class="flex items-center gap-2">
-            <span class="text-primary-light">⌖</span> Santiago, Chile
+            <span class="text-primary-light">⌖</span> {{ footer.location }}
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 border-t border-white/10 pt-6 text-center text-xs">
-      <p>&copy; {{ currentYear() }} FrontLanding. Todos los derechos reservados.</p>
+    <div class="mt-10 border-t border-[#2c2c36] pt-6 text-center text-xs">
+      <p>&copy; {{ currentYear() }} {{ brand.full }}. {{ footer.copyright }}</p>
     </div>
   </div>
 </footer>

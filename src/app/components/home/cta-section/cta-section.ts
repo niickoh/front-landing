@@ -3,6 +3,7 @@ import { Dialog } from 'primeng/dialog';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { NotificationService } from '../../../services/notification.service';
+import { appContent } from '../../../content.config';
 
 @Component({
   selector: 'app-cta-section',
@@ -11,6 +12,7 @@ import { NotificationService } from '../../../services/notification.service';
 })
 export class CtaSection {
   private readonly notifications = inject(NotificationService);
+  protected readonly cta = appContent.cta;
 
   protected readonly dialogVisible = signal(false);
   protected readonly email = signal('');
@@ -31,7 +33,7 @@ export class CtaSection {
 
   protected subscribe(): void {
     if (!this.validateEmail()) {
-      this.notifications.warn('Revisa el formulario', 'Ingresa un correo electrónico válido.');
+      this.notifications.warn('Revisa el formulario', this.cta.emailInvalid);
       return;
     }
 
@@ -46,12 +48,12 @@ export class CtaSection {
     const value = this.email().trim();
 
     if (!value) {
-      this.emailError.set('El correo electrónico es obligatorio.');
+      this.emailError.set(this.cta.emailRequired);
       return false;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      this.emailError.set('Ingresa un correo electrónico válido.');
+      this.emailError.set(this.cta.emailInvalid);
       return false;
     }
 

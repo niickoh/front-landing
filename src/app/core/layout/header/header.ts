@@ -1,10 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-interface NavItem {
-  label: string;
-  path: string;
-}
+import { appContent } from '../../../content.config';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +9,9 @@ interface NavItem {
 })
 export class Header {
   protected readonly menuOpen = signal(false);
-
-  protected readonly navItems: NavItem[] = [
-    { label: 'Inicio', path: '/' },
-    { label: 'Quiénes Somos', path: '/quienes-somos' },
-    { label: 'Contacto', path: '/contacto' },
-  ];
+  protected readonly navItems = appContent.navigation;
+  protected readonly brand = appContent.brand;
+  protected readonly header = appContent.header;
 
   protected toggleMenu(): void {
     this.menuOpen.update((open) => !open);
