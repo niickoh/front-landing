@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { Select } from 'primeng/select';
@@ -37,7 +36,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 @Component({
   selector: 'app-contacto',
-  imports: [FormsModule, Button, InputText, Textarea, Select, Message],
+  imports: [FormsModule, InputText, Textarea, Select, Message],
   templateUrl: './contacto.html',
 })
 export class Contacto {

@@ -1,32 +1,24 @@
-<section class="bg-[#0b0b0f] py-20 sm:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div
-      class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0b0b0f] via-[#1d1d22] to-[#c1121f] px-8 py-16 text-center shadow-2xl sm:px-16"
-    >
-      <div
-        class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent_35%)]"
-      ></div>
-      <div class="relative">
-        <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
-          {{ cta.eyebrow }}
-        </span>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          {{ cta.title }}
-        </h2>
-        <p class="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-[#f3f4f6]">
-          {{ cta.description }}
-        </p>
-        <div class="mt-8">
-          <p-button
-            [label]="cta.button"
-            icon="pi pi-send"
-            severity="contrast"
-            [rounded]="true"
-            size="large"
-            (onClick)="openDialog()"
-            styleClass="bg-primary hover:bg-primary-dark border-none"
-          />
-        </div>
+<section class="cut-top relative isolate overflow-hidden bg-red pt-28 pb-20 lg:pt-40 lg:pb-28" aria-labelledby="cta-title">
+  <!-- Oversized crest star, cropped, as a watermark -->
+  <svg
+    class="absolute -right-24 -bottom-24 -z-10 h-[28rem] w-[28rem] text-red-deep lg:h-[40rem] lg:w-[40rem]"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.6l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9L12 1.5Z" />
+  </svg>
+
+  <div class="page-gutter">
+    <div class="max-w-3xl">
+      <h2 id="cta-title" class="display text-5xl text-chalk sm:text-6xl lg:text-7xl">
+        {{ cta.title }}
+      </h2>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-chalk/90">
+        {{ cta.description }}
+      </p>
+      <div class="mt-10 flex flex-col gap-4 px-2 sm:flex-row sm:px-0">
+        <button type="button" class="btn btn-light" (click)="openDialog()">{{ cta.button }}</button>
       </div>
     </div>
   </div>
@@ -35,39 +27,38 @@
     [header]="cta.dialogTitle"
     [modal]="true"
     [(visible)]="dialogVisible"
-    [style]="{ width: '92vw', maxWidth: '28rem' }"
+    [dismissableMask]="true"
+    [draggable]="false"
+    [style]="{ width: 'calc(100vw - 2rem)', maxWidth: '28rem' }"
   >
-    <div class="flex flex-col gap-4 pt-2">
-      <p class="text-sm text-gray-600">
-        {{ cta.dialogDescription }}
-      </p>
+    <div class="flex flex-col gap-5">
+      <p class="text-muted">{{ cta.dialogDescription }}</p>
 
-      <div class="flex flex-col gap-1.5">
-        <label for="cta-email" class="text-sm font-medium text-dark">{{ cta.emailLabel }}</label>
+      <div class="flex flex-col gap-2">
+        <label for="cta-email" class="font-medium text-chalk">{{ cta.emailLabel }}</label>
         <input
           pInputText
           id="cta-email"
           type="email"
+          inputmode="email"
+          autocomplete="email"
           [placeholder]="cta.emailPlaceholder"
-          class="w-full"
           [value]="email()"
           [attr.aria-invalid]="!!emailError()"
+          [attr.aria-describedby]="emailError() ? 'cta-email-error' : null"
           (input)="onEmailInput($event)"
           (keyup.enter)="subscribe()"
         />
         @if (emailError()) {
-          <small class="text-xs font-medium text-primary">{{ emailError() }}</small>
+          <small id="cta-email-error" class="text-sm font-medium text-red-300">{{ emailError() }}</small>
         }
       </div>
 
-      <div class="mt-2 flex justify-end gap-2">
-        <p-button
-          [label]="cta.cancel"
-          severity="secondary"
-          [text]="true"
-          (onClick)="dialogVisible.set(false)"
-        />
-        <p-button [label]="cta.send" icon="pi pi-check" (onClick)="subscribe()" />
+      <div class="mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <button type="button" class="btn btn-ghost" (click)="dialogVisible.set(false)">
+          {{ cta.cancel }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="subscribe()">{{ cta.send }}</button>
       </div>
     </div>
   </p-dialog>

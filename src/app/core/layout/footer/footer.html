@@ -1,60 +1,74 @@
-<footer class="border-t border-[#2c2c36] bg-[#0b0b0f] text-[#d6d6dc]">
-  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+<footer class="border-t border-line bg-ink text-muted">
+  <div class="page-gutter py-14 lg:py-20">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr_1.2fr]">
       <div>
-        <a class="flex items-center gap-2">
-          <img
-        [src]="header.logo.src"
-        [alt]="header.logo.alt"
-        class="h-10 w-auto rounded-md object-contain"
-      />
-          <span class="text-lg font-bold text-white">
-            {{ brand.full }}
-          </span>
+        <a routerLink="/" class="inline-flex items-center gap-3">
+          <img [src]="header.logo.src" [alt]="header.logo.alt" class="h-14 w-14 object-contain" />
+          <span class="display text-3xl not-italic text-chalk">{{ brand.full }}</span>
         </a>
-        <p class="mt-4 text-sm leading-relaxed">
-          {{ footer.description }}
-        </p>
-        <p class="mt-5 text-sm font-semibold tracking-wide text-[#f6e7a9]">
-          {{ footer.slogan }}
-        </p>
+        <p class="mt-6 max-w-sm leading-relaxed">{{ footer.description }}</p>
+        <p class="display mt-8 text-4xl text-chalk sm:text-5xl">{{ footer.slogan }}</p>
       </div>
 
-      <div>
-        <h3 class="text-sm font-semibold tracking-[0.2em] text-white uppercase">
-          {{ footer.navigationTitle }}
-        </h3>
-        <ul class="mt-4 space-y-2 text-sm">
+      <nav aria-labelledby="footer-nav-title">
+        <h2 id="footer-nav-title" class="font-semibold text-chalk">{{ footer.navigationTitle }}</h2>
+        <ul class="mt-4">
           @for (item of navigation; track item.path) {
             <li>
-              <a [routerLink]="item.path" class="transition-colors hover:text-white">
+              <a
+                [routerLink]="item.path"
+                class="inline-flex min-h-11 items-center transition-colors hover:text-chalk"
+              >
                 {{ item.label }}
               </a>
             </li>
           }
+          <li>
+            <a routerLink="/contacto" class="inline-flex min-h-11 items-center transition-colors hover:text-chalk">
+              Contacto
+            </a>
+          </li>
         </ul>
-      </div>
+      </nav>
 
       <div>
-        <h3 class="text-sm font-semibold tracking-[0.2em] text-white uppercase">
-          {{ footer.contactTitle }}
-        </h3>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li class="flex items-center gap-2">
-            <span class="text-primary-light">✉</span> {{ footer.email }}
+        <h2 class="font-semibold text-chalk">{{ footer.contactTitle }}</h2>
+        <ul class="mt-4 space-y-1">
+          <li>
+            <a
+              [href]="'mailto:' + footer.email"
+              class="flex min-h-11 items-center gap-3 break-all transition-colors hover:text-chalk"
+            >
+              <svg class="h-5 w-5 shrink-0 text-red" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25V6.75Zm0 .5 9 6 9-6" />
+              </svg>
+              {{ footer.email }}
+            </a>
           </li>
-          <li class="flex items-center gap-2">
-            <span class="text-primary-light">☏</span> {{ footer.phone }}
+          <li>
+            <a
+              [href]="'tel:' + footer.phone.replaceAll(' ', '')"
+              class="flex min-h-11 items-center gap-3 transition-colors hover:text-chalk"
+            >
+              <svg class="h-5 w-5 shrink-0 text-red" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.28 6.72 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.37c0-.52-.35-.97-.85-1.09l-4.42-1.1a1.13 1.13 0 0 0-1.17.42l-.97 1.29a1.13 1.13 0 0 1-1.21.38 12.04 12.04 0 0 1-7.14-7.14 1.13 1.13 0 0 1 .38-1.21l1.29-.97c.36-.27.53-.73.42-1.17L6.96 3.1a1.13 1.13 0 0 0-1.09-.85H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+              </svg>
+              {{ footer.phone }}
+            </a>
           </li>
-          <li class="flex items-center gap-2">
-            <span class="text-primary-light">⌖</span> {{ footer.location }}
+          <li class="flex min-h-11 items-start gap-3 py-2.5">
+            <svg class="mt-0.5 h-5 w-5 shrink-0 text-red" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.14-7.5 11.25-7.5 11.25S4.5 17.64 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+            </svg>
+            <span>{{ footer.location }}</span>
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 border-t border-[#2c2c36] pt-6 text-center text-xs">
-      <p>&copy; {{ currentYear() }} {{ brand.full }}. {{ footer.copyright }}</p>
-    </div>
+    <p class="mt-14 border-t border-line pt-6 text-sm">
+      &copy; {{ currentYear() }} {{ brand.full }}. {{ footer.copyright }}
+    </p>
   </div>
 </footer>

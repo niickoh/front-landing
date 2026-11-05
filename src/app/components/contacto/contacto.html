@@ -1,88 +1,87 @@
-<section class="bg-[#0b0b0f] pt-32 pb-20 sm:pb-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-3xl text-center">
-      <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
-        UPAC Allstars
-      </span>
-      <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="contact-title">
+  <div class="page-gutter">
+    <div class="max-w-3xl">
+      <h1 id="contact-title" class="display text-[clamp(3rem,11vw,6.5rem)]">
         {{ contactSection.title }}
       </h1>
-      <p class="mt-6 text-lg leading-relaxed text-[#d6d6dc]">
+      <p class="mt-5 max-w-prose text-lg leading-relaxed text-muted">
         {{ contactSection.subtitle }}
       </p>
     </div>
 
-    <div class="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[1.1fr_1.4fr]">
-      <aside class="flex flex-col gap-6">
-        <div
-          class="rounded-2xl border border-[#2c2c36] bg-[#141419] p-8 text-white shadow-lg shadow-black/20"
-        >
-          <h2 class="text-xl font-semibold text-[#f6e7a9]">Canales oficiales</h2>
-          <ul class="mt-6 space-y-4 text-sm text-[#d6d6dc]">
-            @if (contactSection.channels.whatsapp) {
-              <li class="flex items-start gap-3">
-                <span class="text-lg text-[#d4af37]">☏</span>
-                <span>{{ contactSection.channels.whatsapp }}</span>
-              </li>
-            }
-            @if (contactSection.channels.email) {
-              <li class="flex items-start gap-3">
-                <span class="text-lg text-[#d4af37]">✉</span>
-                <span>{{ contactSection.channels.email }}</span>
-              </li>
-            }
-            @if (contactSection.channels.instagram) {
-              <li class="flex items-start gap-3">
-                <span class="text-lg text-[#d4af37]">◎</span>
-                <a
-                  [href]="contactSection.channels.instagram"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-white underline underline-offset-4"
-                >
-                  {{ contactSection.channels.instagram }}
-                </a>
-              </li>
-            }
-            @if (contactSection.channels.address) {
-              <li class="flex items-start gap-3">
-                <span class="text-lg text-[#d4af37]">⌖</span>
-                <span>{{ contactSection.channels.address }}</span>
-              </li>
-            }
-          </ul>
-        </div>
+    <div
+      class="mt-12 grid grid-cols-1 gap-12 lg:mt-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16"
+    >
+      <!-- On mobile the form comes first: it's why people land on this page. -->
+      <aside class="order-last lg:order-first">
+        <h2 class="display text-3xl">Canales oficiales</h2>
+        <ul class="mt-4 border-t border-line">
+          @if (contactSection.channels.whatsapp) {
+            <li class="border-b border-line py-4">
+              <span class="block text-sm text-muted">WhatsApp</span>
+              <span class="text-lg font-semibold">{{ contactSection.channels.whatsapp }}</span>
+            </li>
+          }
+          @if (contactSection.channels.email) {
+            <li class="border-b border-line py-4">
+              <span class="block text-sm text-muted">Correo</span>
+              <a
+                [href]="'mailto:' + contactSection.channels.email"
+                class="break-all text-lg font-semibold underline decoration-red decoration-2 underline-offset-4 hover:decoration-chalk"
+              >
+                {{ contactSection.channels.email }}
+              </a>
+            </li>
+          }
+          @if (contactSection.channels.instagram) {
+            <li class="border-b border-line py-4">
+              <span class="block text-sm text-muted">Instagram</span>
+              <a
+                [href]="contactSection.channels.instagram"
+                target="_blank"
+                rel="noreferrer"
+                class="break-all text-lg font-semibold underline decoration-red decoration-2 underline-offset-4 hover:decoration-chalk"
+              >
+                {{ contactSection.channels.instagram.replace('https://', '') }}
+              </a>
+            </li>
+          }
+          @if (contactSection.channels.address) {
+            <li class="border-b border-line py-4">
+              <span class="block text-sm text-muted">Ubicación</span>
+              <span class="text-lg font-semibold">{{ contactSection.channels.address }}</span>
+            </li>
+          }
+        </ul>
 
-        <div class="rounded-2xl border border-[#2c2c36] bg-[#141419] p-8 text-white">
-          <h2 class="text-xl font-semibold text-[#f6e7a9]">Proceso de ingreso</h2>
-          <p class="mt-4 text-sm leading-relaxed text-[#d6d6dc]">
-            Queremos conocerte, saber tu nivel, tu disponibilidad y tu motivación para formar parte
-            de la familia Panthers.
-          </p>
-          <a
-            [href]="contactSection.cta.href"
-            class="mt-6 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
-          >
-            {{ contactSection.cta.label }}
-          </a>
-        </div>
+        <h2 class="display mt-12 text-3xl">Proceso de ingreso</h2>
+        <p class="mt-3 max-w-prose leading-relaxed text-muted">
+          Queremos conocerte, saber tu nivel, tu disponibilidad y tu motivación para formar parte de
+          la familia Panthers.
+        </p>
       </aside>
 
       <form
         id="contact-form"
-        class="rounded-2xl border border-[#2c2c36] bg-[#141419] p-6 shadow-xl shadow-black/20 sm:p-8"
+        class="scroll-mt-24 border-t-4 border-red bg-wine p-5 sm:p-8"
         (ngSubmit)="onSubmit()"
         novalidate
+        aria-labelledby="contact-form-title"
       >
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div class="flex flex-col gap-1.5">
-            <label for="nombre" class="text-sm font-medium text-white">Nombre completo *</label>
+        <h2 id="contact-form-title" class="display text-3xl sm:text-4xl">
+          {{ contactSection.cta.label }}
+        </h2>
+        <p class="mt-2 text-sm text-muted">Todos los campos son obligatorios.</p>
+
+        <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="nombre" class="font-medium">Nombre completo</label>
             <input
               pInputText
               id="nombre"
               type="text"
+              autocomplete="name"
               placeholder="Tu nombre completo"
-              class="w-full"
               [value]="form().nombre"
               [attr.aria-invalid]="showError('nombre')"
               [attr.aria-describedby]="showError('nombre') ? 'error-nombre' : null"
@@ -96,15 +95,15 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label for="edad" class="text-sm font-medium text-white">Edad *</label>
+          <div class="flex flex-col gap-2">
+            <label for="edad" class="font-medium">Edad</label>
             <input
               pInputText
               id="edad"
               type="number"
+              inputmode="numeric"
               min="1"
               placeholder="18"
-              class="w-full"
               [value]="form().edad"
               [attr.aria-invalid]="showError('edad')"
               [attr.aria-describedby]="showError('edad') ? 'error-edad' : null"
@@ -118,14 +117,15 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label for="email" class="text-sm font-medium text-white">Correo electrónico *</label>
+          <div class="flex flex-col gap-2">
+            <label for="email" class="font-medium">Correo electrónico</label>
             <input
               pInputText
               id="email"
               type="email"
+              inputmode="email"
+              autocomplete="email"
               placeholder="tucorreo@ejemplo.com"
-              class="w-full"
               [value]="form().email"
               [attr.aria-invalid]="showError('email')"
               [attr.aria-describedby]="showError('email') ? 'error-email' : null"
@@ -139,16 +139,15 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label for="telefono" class="text-sm font-medium text-white"
-              >Teléfono / WhatsApp *</label
-            >
+          <div class="flex flex-col gap-2">
+            <label for="telefono" class="font-medium">Teléfono / WhatsApp</label>
             <input
               pInputText
               id="telefono"
               type="tel"
+              inputmode="tel"
+              autocomplete="tel"
               placeholder="+56 9 1234 5678"
-              class="w-full"
               [value]="form().telefono"
               [attr.aria-invalid]="showError('telefono')"
               [attr.aria-describedby]="showError('telefono') ? 'error-telefono' : null"
@@ -162,14 +161,14 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5 sm:col-span-2">
-            <label for="ciudad" class="text-sm font-medium text-white">Ciudad / Comuna *</label>
+          <div class="flex flex-col gap-2 sm:col-span-2">
+            <label for="ciudad" class="font-medium">Ciudad / Comuna</label>
             <input
               pInputText
               id="ciudad"
               type="text"
+              autocomplete="address-level2"
               placeholder="Tu ciudad o comuna"
-              class="w-full"
               [value]="form().ciudad"
               [attr.aria-invalid]="showError('ciudad')"
               [attr.aria-describedby]="showError('ciudad') ? 'error-ciudad' : null"
@@ -183,10 +182,8 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label for="experiencia" class="text-sm font-medium text-white"
-              >Nivel de experiencia *</label
-            >
+          <div class="flex flex-col gap-2">
+            <label for="experiencia" class="font-medium">Nivel de experiencia</label>
             <p-select
               inputId="experiencia"
               [options]="experienciaOptions"
@@ -205,16 +202,13 @@
             }
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label for="disponibilidad" class="text-sm font-medium text-white"
-              >Disponibilidad horaria *</label
-            >
+          <div class="flex flex-col gap-2">
+            <label for="disponibilidad" class="font-medium">Disponibilidad horaria</label>
             <input
               pInputText
               id="disponibilidad"
               type="text"
               placeholder="Ej: Lun a Vie 18:00 - 21:00"
-              class="w-full"
               [value]="form().disponibilidad"
               [attr.aria-invalid]="showError('disponibilidad')"
               [attr.aria-describedby]="showError('disponibilidad') ? 'error-disponibilidad' : null"
@@ -229,14 +223,13 @@
           </div>
         </div>
 
-        <div class="mt-6 flex flex-col gap-1.5">
-          <label for="mensaje" class="text-sm font-medium text-white">Motivación / Mensaje *</label>
+        <div class="mt-6 flex flex-col gap-2">
+          <label for="mensaje" class="font-medium">Motivación / Mensaje</label>
           <textarea
             pTextarea
             id="mensaje"
             rows="5"
-            placeholder="Cuéntanos por qué quieres formar parte de UPAC Allstars y qué te motiva a ingresar..."
-            class="w-full"
+            placeholder="Cuéntanos por qué quieres formar parte de UPAC Allstars y qué te motiva a ingresar"
             [value]="form().mensaje"
             [attr.aria-invalid]="showError('mensaje')"
             [attr.aria-describedby]="showError('mensaje') ? 'error-mensaje' : null"
@@ -250,47 +243,38 @@
           }
         </div>
 
-        <div
-          class="mt-6 flex items-start gap-3 rounded-xl border border-[#2c2c36] bg-[#0b0b0f] p-3"
-        >
-          <input
-            id="aceptaPolitica"
-            type="checkbox"
-            class="mt-1 h-4 w-4 rounded border-[#d4af37] text-primary focus:ring-[#d4af37]"
-            [checked]="form().aceptaPolitica"
-            [attr.aria-invalid]="showError('aceptaPolitica')"
-            (change)="
-              updateField('aceptaPolitica', $any($event.target).checked);
-              markTouched('aceptaPolitica')
-            "
-          />
-          <label for="aceptaPolitica" class="text-sm leading-relaxed text-[#d6d6dc]">
-            Acepto que UPAC Allstars pueda contactarme y usar estos datos únicamente para gestionar
-            mi interés en ingresar al equipo.
+        <div class="mt-6">
+          <label for="aceptaPolitica" class="flex cursor-pointer items-start gap-3 py-2">
+            <input
+              id="aceptaPolitica"
+              type="checkbox"
+              class="mt-0.5 h-5 w-5 shrink-0 accent-red"
+              [checked]="form().aceptaPolitica"
+              [attr.aria-invalid]="showError('aceptaPolitica')"
+              [attr.aria-describedby]="showError('aceptaPolitica') ? 'error-politica' : null"
+              (change)="
+                updateField('aceptaPolitica', $any($event.target).checked);
+                markTouched('aceptaPolitica')
+              "
+            />
+            <span class="text-sm leading-relaxed text-muted">
+              Acepto que UPAC Allstars pueda contactarme y usar estos datos únicamente para gestionar
+              mi interés en ingresar al equipo.
+            </span>
           </label>
+          @if (showError('aceptaPolitica')) {
+            <p-message id="error-politica" severity="error" size="small" variant="simple">{{
+              errors().aceptaPolitica
+            }}</p-message>
+          }
         </div>
-        @if (showError('aceptaPolitica')) {
-          <p-message severity="error" size="small" variant="simple">{{
-            errors().aceptaPolitica
-          }}</p-message>
-        }
 
-        <div class="mt-8 flex items-center justify-between gap-3">
-          <div class="text-sm text-[#d6d6dc]">
-            @if (isSending()) {
-              <span>Enviando solicitud...</span>
-            }
-          </div>
-          <p-button
-            type="submit"
-            [label]="isSending() ? 'Enviando...' : 'Enviar solicitud'"
-            icon="pi pi-send"
-            [rounded]="true"
-            size="large"
-            [disabled]="isSending()"
-            styleClass="bg-primary hover:bg-primary-dark border-none"
-          />
+        <div class="mt-8 flex flex-col px-2 sm:flex-row sm:justify-end sm:px-0">
+          <button type="submit" class="btn btn-primary" [disabled]="isSending()">
+            {{ isSending() ? 'Enviando solicitud…' : 'Enviar solicitud' }}
+          </button>
         </div>
+        <p class="sr-only" aria-live="polite">{{ isSending() ? 'Enviando solicitud' : '' }}</p>
       </form>
     </div>
   </div>

@@ -1,13 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
-import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { NotificationService } from '../../../services/notification.service';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-cta-section',
-  imports: [Dialog, Button, InputText],
+  imports: [Dialog, InputText],
   templateUrl: './cta-section.html',
 })
 export class CtaSection {

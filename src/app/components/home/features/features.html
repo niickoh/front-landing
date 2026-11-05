@@ -1,29 +1,28 @@
-<section class="bg-[#0b0b0f] py-20 sm:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
-      <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
+<section class="bg-ink py-20 lg:py-28" aria-labelledby="teams-title">
+  <div class="page-gutter">
+    <div class="max-w-2xl">
+      <h2 id="teams-title" class="display text-5xl sm:text-6xl lg:text-7xl">
         {{ teamsSection.title }}
-      </span>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-        Formación, identidad y energía Panthers
       </h2>
+      <p class="mt-4 text-lg text-muted">Formación, identidad y energía Panthers.</p>
     </div>
 
-    <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <ul class="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:mt-16 lg:grid-cols-6 lg:gap-x-8">
       @for (team of teamsSection.teams; track team.id) {
-        <article
-          class="group rounded-2xl border border-[#2c2c36] bg-[#141419] p-5 shadow-lg shadow-black/20 transition-all hover:-translate-y-1 hover:border-[#d4af37]/60"
-        >
-          <div class="flex items-center justify-center overflow-hidden rounded-xl bg-[#0b0b0f] p-4">
+        <li class="group text-center">
+          <div
+            class="mx-auto aspect-square w-full max-w-44 overflow-hidden rounded-full bg-black ring-2 ring-line ring-offset-4 ring-offset-ink transition-shadow duration-200 group-hover:ring-red"
+          >
             <img
-              [src]="team.logo || 'https://placehold.co/220x220/0b0b0f/d4af37?text=UPAC'"
-              [alt]="team.displayName"
-              class="h-24 w-24 object-contain"
+              [src]="team.logo || header.logo.src"
+              [alt]="'Logo de ' + team.displayName"
+              loading="lazy"
+              class="h-full w-full object-cover"
             />
           </div>
-          <h3 class="mt-5 text-center text-xl font-semibold text-white">{{ team.displayName }}</h3>
-        </article>
+          <h3 class="display mt-5 text-2xl leading-none sm:text-[1.75rem]">{{ team.displayName }}</h3>
+        </li>
       }
-    </div>
+    </ul>
   </div>
 </section>

@@ -10,4 +10,5 @@ export class QuienesSomos {
   protected readonly about = this.content.value.aboutSection;
   protected readonly team = this.content.value.teamSection;
   protected readonly values = this.content.value.valuesSection;
+  protected readonly header = this.content.value.header;
 }

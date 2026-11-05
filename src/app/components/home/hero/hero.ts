@@ -1,34 +1,34 @@
 import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-import { Button } from 'primeng/button';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-hero',
-  imports: [RouterLink, Button],
+  imports: [RouterLink],
   templateUrl: './hero.html',
 })
 export class Hero {
   private readonly content = inject(ContentService);
+  private readonly sanitizer = inject(DomSanitizer);
   protected readonly hero = this.content.value.hero;
+  protected readonly footer = this.content.value.footer;
 
-  constructor(private readonly sanitizer: DomSanitizer) {}
+  /** Text that runs around the 25th-anniversary seal. */
+  protected readonly sealText = `${this.hero.eyebrow} ★ ${this.hero.proofLabel} ★ `;
 
-  protected get youtubeEmbedUrl() {
+  // Built once: a getter would hand the iframe a new SafeResourceUrl on every change detection.
+  protected readonly youtubeEmbedUrl = this.buildYoutubeEmbedUrl();
+
+  private buildYoutubeEmbedUrl() {
     const url = this.hero.youtubeUrl;
-    if (!url) {
-      return this.sanitizer.bypassSecurityTrustResourceUrl('');
-    }
-
-    const match = url.match(/(?:v=|be\/)([A-Za-z0-9_-]{11})/);
-    const videoId = match?.[1];
+    const videoId = url?.match(/(?:v=|be\/)([A-Za-z0-9_-]{11})/)?.[1];
     if (!videoId) {
-      return this.sanitizer.bypassSecurityTrustResourceUrl('');
+      return null;
     }
 
     const start = this.hero.startSeconds ?? 0;
-    const end = (this.hero.startSeconds ?? 0) + (this.hero.playSeconds ?? 0);
+    const end = start + (this.hero.playSeconds ?? 0);
     const params = new URLSearchParams({
       autoplay: String(this.hero.autoplay ? 1 : 0),
       mute: String(this.hero.muted ? 1 : 0),
@@ -40,6 +40,7 @@ export class Hero {
       controls: '0',
       playsinline: '1',
       iv_load_policy: '3',
+      disablekb: '1',
     });
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(

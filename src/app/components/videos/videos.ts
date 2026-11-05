@@ -1,41 +1,39 @@
-import { Component, inject, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import type { AppContent } from '../../content.config';
+import { Component, computed, inject, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-videos',
-  imports: [NgClass],
   templateUrl: './videos.html',
 })
 export class Videos {
   private readonly content = inject(ContentService);
+  private readonly sanitizer = inject(DomSanitizer);
+  // Cached so change detection doesn't hand iframes a new URL object (which reloads them).
+  private readonly embedUrls = new Map<string, SafeResourceUrl>();
+
   protected readonly videos = this.content.value.videos;
-  protected selectedEventId: string = this.videos.events[0]?.id ?? '';
+  protected readonly selectedEventId = signal<string>(this.videos.events[0]?.id ?? '');
   protected readonly videoError = signal(false);
 
-  constructor(private readonly sanitizer: DomSanitizer) {}
-
-  protected get selectedEvent(): AppContent['videos']['events'][number] | undefined {
-    return (
-      this.videos.events.find((event) => event.id === this.selectedEventId) ?? this.videos.events[0]
-    );
-  }
+  protected readonly selectedEvent = computed(
+    () =>
+      this.videos.events.find((event) => event.id === this.selectedEventId()) ??
+      this.videos.events[0],
+  );
 
   protected selectEvent(eventId: string): void {
-    this.selectedEventId = eventId;
+    this.selectedEventId.set(eventId);
     this.videoError.set(false);
   }
 
-  protected getVideoEmbedUrl(url: string) {
-    const match = url.match(/(?:v=|be\/)([A-Za-z0-9_-]{11})/);
-    const videoId = match?.[1];
-
-    if (!videoId) {
-      return this.sanitizer.bypassSecurityTrustResourceUrl('');
+  protected getVideoEmbedUrl(url: string): SafeResourceUrl {
+    const cached = this.embedUrls.get(url);
+    if (cached) {
+      return cached;
     }
 
+    const videoId = url.match(/(?:v=|be\/)([A-Za-z0-9_-]{11})/)?.[1];
     const params = new URLSearchParams({
       rel: '0',
       modestbranding: '1',
@@ -43,10 +41,12 @@ export class Videos {
       controls: '1',
       playsinline: '1',
     });
-
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.youtube.com/embed/${videoId}?${params.toString()}`,
+    const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      videoId ? `https://www.youtube.com/embed/${videoId}?${params.toString()}` : '',
     );
+
+    this.embedUrls.set(url, safeUrl);
+    return safeUrl;
   }
 
   protected markVideoError(): void {

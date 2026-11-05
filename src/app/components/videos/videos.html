@@ -1,110 +1,78 @@
-<section class="bg-[#0b0b0f] pt-32 pb-20 sm:pb-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-3xl text-center">
-      <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
-        {{ videos.eyebrow }} · 25 años
-      </span>
-      <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-        {{ videos.title }}
-      </h1>
-      <p class="mt-5 text-lg leading-relaxed text-[#d6d6dc]">
-        {{ videos.subtitle }}
-      </p>
+<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="videos-title">
+  <div class="page-gutter">
+    <div class="max-w-3xl">
+      <h1 id="videos-title" class="display text-[clamp(3rem,11vw,6.5rem)]">{{ videos.title }}</h1>
+      <p class="mt-5 max-w-prose text-lg leading-relaxed text-muted">{{ videos.subtitle }}</p>
     </div>
 
-    <div class="mt-16 grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)]">
-      <aside class="space-y-4">
-        @for (event of videos.events; track event.id) {
-          <button
-            type="button"
-            (click)="selectEvent(event.id)"
-            class="group w-full overflow-hidden rounded-2xl border text-left transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4af37]"
-            [ngClass]="
-              event.id === selectedEventId
-                ? 'border-[#d4af37] bg-[#141419] shadow-lg shadow-[#d4af37]/10'
-                : 'border-[#2c2c36] bg-[#141419]/80'
-            "
-          >
-            <img
-              [src]="event.thumbnail"
-              [alt]="event.title"
-              loading="lazy"
-              class="h-36 w-full object-cover transition duration-200 group-hover:scale-105"
-            />
-            <div class="p-4">
-              <span class="text-xs font-semibold uppercase tracking-[0.18em] text-[#d4af37]">
-                Evento
-              </span>
-              <h2 class="mt-2 text-lg font-bold text-white">{{ event.title }}</h2>
-            </div>
-          </button>
-        }
-      </aside>
-
-      <div
-        class="rounded-3xl border border-[#2c2c36] bg-[#141419] p-4 shadow-xl shadow-black/30 sm:p-6"
-      >
-        @if (selectedEvent && selectedEvent.youtubeLinks.length) {
-          <div>
-            <span
-              class="inline-block rounded-full border border-[#d4af37] bg-[#d4af37]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f6e7a9]"
-            >
-              {{ selectedEvent.title }}
-            </span>
-            <h3 class="mt-4 text-2xl font-bold text-white">Rutinas y momentos destacados</h3>
-            @if (videoError()) {
-              <div
-                class="mt-4 rounded-xl border border-[#c1121f]/60 bg-[#c1121f]/10 p-4 text-sm text-[#fecaca]"
-                role="alert"
+    <div class="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
+      <!-- Event picker: swipeable chips on mobile, sticky list on desktop -->
+      <nav aria-label="Eventos" class="lg:sticky lg:top-24 lg:self-start">
+        <ul class="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
+          @for (event of videos.events; track event.id) {
+            @let isSelected = event.id === selectedEvent().id;
+            <li class="shrink-0 snap-start">
+              <button
+                type="button"
+                (click)="selectEvent(event.id)"
+                [attr.aria-pressed]="isSelected"
+                class="group flex min-h-12 w-full items-center gap-4 border-2 px-4 py-2 text-left transition-colors lg:p-2"
+                [class]="isSelected ? 'border-red bg-wine text-chalk' : 'border-line text-muted hover:border-chalk/50 hover:text-chalk'"
               >
-                No pudimos cargar uno de los videos. Puedes intentarlo nuevamente desde YouTube.
-              </div>
+                <img
+                  [src]="event.thumbnail"
+                  alt=""
+                  loading="lazy"
+                  class="hidden aspect-video w-24 shrink-0 object-cover lg:block"
+                />
+                <span>
+                  <span class="display block text-xl leading-none">{{ event.title }}</span>
+                  <span class="mt-1 block text-sm">
+                    {{ event.youtubeLinks.length }}
+                    {{ event.youtubeLinks.length === 1 ? 'video' : 'videos' }}
+                  </span>
+                </span>
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <div>
+        @if (selectedEvent(); as event) {
+          @if (event.youtubeLinks.length) {
+            @if (videoError()) {
+              <p class="mb-6 border-l-4 border-red bg-wine p-4 text-chalk" role="alert">
+                No pudimos cargar uno de los videos. Ábrelo directamente en YouTube.
+              </p>
             }
-            <div
-              class="videos-scroll mt-6 max-h-[72vh] space-y-5 overflow-y-auto pr-2"
-              tabindex="0"
-              aria-label="Lista de videos del evento"
-            >
-              @for (videoLink of selectedEvent.youtubeLinks; track videoLink.url) {
-                <article
-                  class="overflow-hidden rounded-2xl border border-[#2c2c36] bg-[#0b0b0f] transition-colors duration-200 hover:border-[#d4af37]/70"
-                >
-                  <iframe
-                    [src]="getVideoEmbedUrl(videoLink.url)"
-                    [title]="videoLink.title"
-                    loading="lazy"
-                    class="aspect-video w-full border-0"
-                    allow="
-                      accelerometer;
-                      autoplay;
-                      clipboard-write;
-                      encrypted-media;
-                      gyroscope;
-                      picture-in-picture;
-                      web-share;
-                    "
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    (error)="markVideoError()"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="p-4">
-                    <h4 class="truncate text-base font-bold text-white" [title]="videoLink.title">
-                      {{ videoLink.title }}
-                    </h4>
-                    <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-[#d6d6dc]">
+            <ul class="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
+              @for (videoLink of event.youtubeLinks; track videoLink.url) {
+                <li>
+                  <article>
+                    <iframe
+                      [src]="getVideoEmbedUrl(videoLink.url)"
+                      [title]="videoLink.title"
+                      loading="lazy"
+                      class="aspect-video w-full border-0 bg-wine"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      (error)="markVideoError()"
+                      allowfullscreen
+                    ></iframe>
+                    <h2 class="mt-4 text-lg font-semibold text-chalk">{{ videoLink.title }}</h2>
+                    <p class="mt-1 leading-relaxed text-muted">
                       {{ videoLink.description || videos.fallbackDescription }}
                     </p>
-                  </div>
-                </article>
+                  </article>
+                </li>
               }
-            </div>
-          </div>
-        } @else {
-          <div
-            class="rounded-2xl border border-dashed border-[#d4af37]/50 bg-[#d4af37]/5 p-12 text-center text-[#f6e7a9]"
-          >
-            Este evento aún no tiene videos disponibles.
-          </div>
+            </ul>
+          } @else {
+            <p class="border-2 border-dashed border-line p-10 text-center text-muted">
+              Este evento aún no tiene videos. Elige otro evento de la lista.
+            </p>
+          }
         }
       </div>
     </div>

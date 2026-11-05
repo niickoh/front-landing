@@ -8,4 +8,5 @@ import { ContentService } from '../../../services/content.service';
 export class Features {
   private readonly content = inject(ContentService);
   protected readonly teamsSection = this.content.value.teamsSection;
+  protected readonly header = this.content.value.header;
 }

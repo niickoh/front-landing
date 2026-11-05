@@ -34,8 +34,8 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
-          port: 21
-          local-dir: dist/front-landing/browser/
+          por1
+          local-dir: dist/front-landit: 2ng/browser/
           server-dir: /public_html/upacallstars/
           dangerous-clean-slate: false
           timeout: 120000

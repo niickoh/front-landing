@@ -1,76 +1,66 @@
-<section class="bg-[#0b0b0f] pt-32 pb-20 sm:pb-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-3xl text-center">
-      <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
-        {{ about.eyebrow }}
-      </span>
-      <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-        {{ about.title }}
-      </h1>
-      <p class="mt-4 text-xl font-medium leading-relaxed text-[#f6e7a9]">
-        {{ about.subtitle }}
-      </p>
-      <p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#d6d6dc] sm:text-lg">
-        {{ about.description }}
-      </p>
+<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="about-title">
+  <div class="page-gutter grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-20">
+    <div>
+      <h1 id="about-title" class="display text-[clamp(3rem,11vw,6.5rem)]">{{ about.title }}</h1>
+      <p class="mt-6 text-xl font-semibold text-chalk sm:text-2xl">{{ about.subtitle }}</p>
+      <p class="mt-4 max-w-prose text-lg leading-relaxed text-muted">{{ about.description }}</p>
     </div>
-
-    <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      @for (member of team.members; track member.id; let index = $index) {
-        <article
-          class="about-member-card group relative rounded-2xl border border-[#2c2c36] bg-[#141419] p-7 text-center shadow-lg shadow-black/20 transition-all duration-200 hover:-translate-y-1 hover:border-[#d4af37] hover:shadow-[#d4af37]/10 focus-within:-translate-y-1"
-          [class.about-member-card--featured]="member.featured"
-          [style.--member-delay]="index * 90 + 'ms'"
-        >
-          @if (member.badge) {
-            <span
-              class="absolute right-5 top-5 rounded-full border border-[#d4af37]/50 px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#f6e7a9] uppercase"
-            >
-              {{ member.badge }}
-            </span>
-          }
-          <img
-            [src]="member.photo || about.placeholderImage"
-            [alt]="member.name"
-            class="mx-auto h-32 w-32 rounded-full object-cover shadow-md ring-4 ring-[#d4af37]/20 transition-transform duration-200 group-hover:scale-105"
-          />
-          <h2 class="mt-5 text-xl font-semibold text-white">{{ member.name }}</h2>
-          <p class="mt-1 text-sm font-medium text-[#d4af37]">{{ member.role }}</p>
-          <p class="mt-4 text-sm leading-relaxed text-[#d6d6dc]">{{ member.bio }}</p>
-          @if (member.specialty) {
-            <span
-              class="mt-5 inline-flex rounded-full bg-[#c1121f]/15 px-3 py-1 text-xs font-semibold text-[#fca5a5]"
-            >
-              {{ member.specialty }}
-            </span>
-          }
-        </article>
-      }
-    </div>
+    <img
+      [src]="header.logo.src"
+      [alt]="header.logo.alt"
+      class="mx-auto w-44 sm:w-56 lg:w-full lg:max-w-sm"
+    />
   </div>
 </section>
 
-<section class="bg-[#141419] py-20 sm:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
-      <span class="text-sm font-semibold tracking-[0.2em] text-[#d4af37] uppercase">
-        {{ values.eyebrow }}
-      </span>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-        {{ values.title }}
-      </h2>
+<section class="bg-wine py-20 lg:py-28" aria-labelledby="staff-title">
+  <div class="page-gutter">
+    <div class="max-w-2xl">
+      <h2 id="staff-title" class="display text-5xl sm:text-6xl">{{ team.title }}</h2>
+      <p class="mt-4 text-lg text-muted">{{ team.subtitle }}</p>
     </div>
 
-    <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      @for (value of values.items; track value.id) {
-        <article
-          class="rounded-2xl border border-[#2c2c36] bg-[#0b0b0f] p-7 transition-colors duration-200 hover:border-[#c1121f]"
-        >
-          <div class="text-3xl">{{ value.icon }}</div>
-          <h3 class="mt-4 text-xl font-semibold text-white">{{ value.title }}</h3>
-          <p class="mt-3 leading-relaxed text-[#d6d6dc]">{{ value.description }}</p>
-        </article>
+    <ul class="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-8">
+      @for (member of team.members; track member.id) {
+        <li>
+          <article class="flex h-full flex-col">
+            <div class="relative">
+              <img
+                [src]="member.photo || about.placeholderImage"
+                [alt]="'Foto de ' + member.name"
+                loading="lazy"
+                class="aspect-[4/3] w-full bg-ink object-cover sm:aspect-square"
+              />
+              @if (member.featured) {
+                <span class="absolute inset-x-0 bottom-0 h-1.5 bg-red" aria-hidden="true"></span>
+              }
+            </div>
+            <h3 class="display mt-6 text-3xl">{{ member.name }}</h3>
+            <p class="mt-1 font-semibold text-chalk/85">{{ member.role }}</p>
+            <p class="mt-3 leading-relaxed text-muted">{{ member.bio }}</p>
+            @if (member.specialty) {
+              <p class="mt-4 text-sm text-muted">
+                Especialidad: <span class="font-semibold text-chalk">{{ member.specialty }}</span>
+              </p>
+            }
+          </article>
+        </li>
       }
-    </div>
+    </ul>
+  </div>
+</section>
+
+<section class="bg-ink py-20 lg:py-28" aria-labelledby="values-title">
+  <div class="page-gutter">
+    <h2 id="values-title" class="display text-5xl sm:text-6xl">{{ values.title }}</h2>
+
+    <ul class="mt-12 grid grid-cols-1 gap-x-12 sm:grid-cols-2 lg:mt-16">
+      @for (value of values.items; track value.id) {
+        <li class="border-t border-line py-8">
+          <h3 class="display text-4xl text-chalk sm:text-5xl">{{ value.title }}</h3>
+          <p class="mt-3 max-w-md text-lg leading-relaxed text-muted">{{ value.description }}</p>
+        </li>
+      }
+    </ul>
   </div>
 </section>
