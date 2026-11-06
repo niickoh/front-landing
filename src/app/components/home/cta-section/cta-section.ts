@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
-import { Dialog } from 'primeng/dialog';
-import { InputText } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { TuiButton, TuiDialog, TuiError, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { NotificationService } from '../../../services/notification.service';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-cta-section',
-  imports: [Dialog, InputText],
+  imports: [FormsModule, TuiButton, TuiDialog, TuiError, TuiInput, TuiTextfield],
   templateUrl: './cta-section.html',
 })
 export class CtaSection {
@@ -24,8 +24,8 @@ export class CtaSection {
     this.dialogVisible.set(true);
   }
 
-  protected onEmailInput(event: Event): void {
-    this.email.set((event.target as HTMLInputElement).value);
+  protected onEmailInput(value: string): void {
+    this.email.set(value ?? '');
     if (this.emailError()) {
       this.validateEmail();
     }

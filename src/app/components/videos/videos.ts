@@ -1,9 +1,13 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { TuiAppearance, TuiCell, TuiIcon, TuiNotification, TuiTitle } from '@taiga-ui/core';
+import { TuiChip } from '@taiga-ui/kit';
+import { TuiCardLarge } from '@taiga-ui/layout';
 import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-videos',
+  imports: [TuiAppearance, TuiCell, TuiIcon, TuiNotification, TuiTitle, TuiChip, TuiCardLarge],
   templateUrl: './videos.html',
 })
 export class Videos {

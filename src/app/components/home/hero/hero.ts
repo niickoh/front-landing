@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { TuiButton } from '@taiga-ui/core';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-hero',
-  imports: [RouterLink],
+  imports: [RouterLink, TuiButton],
   templateUrl: './hero.html',
 })
 export class Hero {

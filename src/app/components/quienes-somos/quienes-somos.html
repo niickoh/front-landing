@@ -1,14 +1,15 @@
-<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="about-title">
-  <div class="page-gutter grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-20">
+<section class="glow pt-28 pb-16 lg:pt-36 lg:pb-24" aria-labelledby="about-title">
+  <div class="page-gutter grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-20">
     <div>
-      <h1 id="about-title" class="display text-[clamp(3rem,11vw,6.5rem)]">{{ about.title }}</h1>
+      <p class="eyebrow">{{ about.eyebrow }}</p>
+      <h1 id="about-title" class="display mt-3 text-[clamp(3rem,11vw,6.5rem)]">{{ about.title }}</h1>
       <p class="mt-6 text-xl font-semibold text-chalk sm:text-2xl">{{ about.subtitle }}</p>
       <p class="mt-4 max-w-prose text-lg leading-relaxed text-muted">{{ about.description }}</p>
     </div>
     <img
       [src]="header.logo.src"
       [alt]="header.logo.alt"
-      class="mx-auto w-44 sm:w-56 lg:w-full lg:max-w-sm"
+      class="order-first mx-auto w-44 sm:w-56 lg:order-none lg:w-full lg:max-w-sm"
     />
   </div>
 </section>
@@ -20,29 +21,34 @@
       <p class="mt-4 text-lg text-muted">{{ team.subtitle }}</p>
     </div>
 
-    <ul class="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-8">
+    <ul class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
       @for (member of team.members; track member.id) {
         <li>
-          <article class="flex h-full flex-col">
-            <div class="relative">
-              <img
-                [src]="member.photo || about.placeholderImage"
-                [alt]="'Foto de ' + member.name"
-                loading="lazy"
-                class="aspect-[4/3] w-full bg-ink object-cover sm:aspect-square"
-              />
-              @if (member.featured) {
-                <span class="absolute inset-x-0 bottom-0 h-1.5 bg-red" aria-hidden="true"></span>
+          <article
+            tuiCardLarge
+            appearance="outline-grayscale"
+            class="flex h-full flex-col gap-0! overflow-hidden bg-ink/60! p-0!"
+            [class.ring-2]="member.featured"
+            [class.ring-red]="member.featured"
+          >
+            <img
+              [src]="member.photo || about.placeholderImage"
+              [alt]="'Foto de ' + member.name"
+              loading="lazy"
+              class="aspect-[4/3] w-full bg-ink object-cover sm:aspect-square"
+            />
+            <div class="flex flex-1 flex-col p-5 sm:p-6">
+              <h3 class="display text-3xl">{{ member.name }}</h3>
+              <p class="mt-1 font-semibold text-chalk/85">{{ member.role }}</p>
+              <p class="mt-3 leading-relaxed text-muted">{{ member.bio }}</p>
+              @if (member.specialty) {
+                <div class="mt-auto pt-5">
+                  <span tuiChip size="s" appearance="neutral">
+                    Especialidad: <strong class="ml-1 text-chalk">{{ member.specialty }}</strong>
+                  </span>
+                </div>
               }
             </div>
-            <h3 class="display mt-6 text-3xl">{{ member.name }}</h3>
-            <p class="mt-1 font-semibold text-chalk/85">{{ member.role }}</p>
-            <p class="mt-3 leading-relaxed text-muted">{{ member.bio }}</p>
-            @if (member.specialty) {
-              <p class="mt-4 text-sm text-muted">
-                Especialidad: <span class="font-semibold text-chalk">{{ member.specialty }}</span>
-              </p>
-            }
           </article>
         </li>
       }
@@ -54,10 +60,15 @@
   <div class="page-gutter">
     <h2 id="values-title" class="display text-5xl sm:text-6xl">{{ values.title }}</h2>
 
-    <ul class="mt-12 grid grid-cols-1 gap-x-12 sm:grid-cols-2 lg:mt-16">
-      @for (value of values.items; track value.id) {
-        <li class="border-t border-line py-8">
-          <h3 class="display text-4xl text-chalk sm:text-5xl">{{ value.title }}</h3>
+    <ul class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-14">
+      @for (value of values.items; track value.id; let i = $index) {
+        <li
+          tuiCardLarge
+          appearance="outline-grayscale"
+          class="bg-wine/50! p-5! sm:p-7!"
+        >
+          <span class="eyebrow">0{{ i + 1 }}</span>
+          <h3 class="display mt-2 text-4xl text-chalk sm:text-5xl">{{ value.title }}</h3>
           <p class="mt-3 max-w-md text-lg leading-relaxed text-muted">{{ value.description }}</p>
         </li>
       }

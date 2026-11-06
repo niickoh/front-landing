@@ -1,10 +1,12 @@
 import { Component, DOCUMENT, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TuiButton, TuiPopup } from '@taiga-ui/core';
+import { TuiDrawer } from '@taiga-ui/kit';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, TuiButton, TuiPopup, TuiDrawer],
   templateUrl: './header.html',
   host: {
     '(document:keydown.escape)': 'closeMenu()',
@@ -19,7 +21,7 @@ export class Header {
   protected readonly header = this.content.value.header;
 
   constructor() {
-    // Lock page scroll while the mobile sheet is open.
+    // Lock page scroll while the mobile drawer is open.
     effect(() => {
       this.document.body.style.overflow = this.menuOpen() ? 'hidden' : '';
     });
@@ -31,5 +33,12 @@ export class Header {
 
   protected closeMenu(): void {
     this.menuOpen.set(false);
+  }
+
+  /** The drawer's backdrop is a pseudo-element of the host, so a click on the host itself means "outside". */
+  protected onDrawerClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeMenu();
+    }
   }
 }

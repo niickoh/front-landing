@@ -1,8 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { TuiChip } from '@taiga-ui/kit';
+import { TuiCardLarge } from '@taiga-ui/layout';
 import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-quienes-somos',
+  imports: [TuiChip, TuiCardLarge],
   templateUrl: './quienes-somos.html',
 })
 export class QuienesSomos {

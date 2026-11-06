@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TuiCell, TuiIcon, TuiLink, TuiTitle } from '@taiga-ui/core';
 import { ContentService } from '../../../services/content.service';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, TuiCell, TuiIcon, TuiLink, TuiTitle],
   templateUrl: './footer.html',
 })
 export class Footer {

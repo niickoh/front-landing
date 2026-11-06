@@ -1,25 +1,39 @@
 <section class="bg-wine py-20 lg:py-28" aria-labelledby="approach-title">
-  <div class="page-gutter grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+  <div class="page-gutter grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
     <div class="lg:sticky lg:top-28 lg:self-start">
       <h2 id="approach-title" class="display text-5xl sm:text-6xl">
         Un equipo comprometido con la excelencia del cheerleading
       </h2>
     </div>
 
-    <ul class="border-t border-line">
-      @for (service of services; track service.title) {
-        <li class="border-b border-line py-8 lg:py-10">
-          <h3 class="display text-3xl text-chalk sm:text-4xl">{{ service.title }}</h3>
-          <p class="mt-3 max-w-prose text-lg leading-relaxed text-muted">
-            {{ service.description }}
-          </p>
-          <ul class="mt-5 flex flex-wrap gap-2" aria-label="Énfasis">
-            @for (tag of service.tags; track tag) {
-              <li class="border border-line px-3 py-1 text-sm font-medium text-chalk/85">
-                {{ tag }}
-              </li>
-            }
-          </ul>
+    <ul class="flex flex-col gap-3 sm:gap-4">
+      @for (service of services; track service.title; let i = $index) {
+        <li>
+          <article
+            tuiCardLarge
+            appearance="outline-grayscale"
+            class="bg-ink/50! p-5! sm:p-7!"
+          >
+            <div class="flex items-start gap-4">
+              <span
+                class="display flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red text-base text-chalk"
+                aria-hidden="true"
+              >
+                {{ i + 1 }}
+              </span>
+              <div class="min-w-0">
+                <h3 class="display text-3xl text-chalk sm:text-4xl">{{ service.title }}</h3>
+                <p class="mt-3 max-w-prose text-lg leading-relaxed text-muted">
+                  {{ service.description }}
+                </p>
+                <ul class="mt-5 flex flex-wrap gap-2" aria-label="Énfasis">
+                  @for (tag of service.tags; track tag) {
+                    <li tuiChip size="s" appearance="neutral">{{ tag }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </article>
         </li>
       }
     </ul>

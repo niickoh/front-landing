@@ -1,7 +1,7 @@
-<section class="cut-top relative isolate overflow-hidden bg-red pt-28 pb-20 lg:pt-40 lg:pb-28" aria-labelledby="cta-title">
+<section class="relative isolate overflow-hidden bg-red py-20 lg:py-28" aria-labelledby="cta-title">
   <!-- Oversized crest star, cropped, as a watermark -->
   <svg
-    class="absolute -right-24 -bottom-24 -z-10 h-[28rem] w-[28rem] text-red-deep lg:h-[40rem] lg:w-[40rem]"
+    class="absolute -right-24 -bottom-24 -z-10 h-[24rem] w-[24rem] text-red-deep lg:h-[38rem] lg:w-[38rem]"
     viewBox="0 0 24 24"
     fill="currentColor"
     aria-hidden="true"
@@ -17,49 +17,62 @@
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-chalk/90">
         {{ cta.description }}
       </p>
-      <div class="mt-10 flex flex-col gap-4 px-2 sm:flex-row sm:px-0">
-        <button type="button" class="btn btn-light" (click)="openDialog()">{{ cta.button }}</button>
+      <div class="mt-10 flex flex-col sm:flex-row">
+        <button
+          tuiButton
+          type="button"
+          size="l"
+          iconEnd="@tui.arrow-right"
+          class="bg-chalk! text-ink! hover:bg-ink! hover:text-chalk!"
+          (click)="openDialog()"
+        >
+          {{ cta.button }}
+        </button>
       </div>
     </div>
   </div>
+</section>
 
-  <p-dialog
-    [header]="cta.dialogTitle"
-    [modal]="true"
-    [(visible)]="dialogVisible"
-    [dismissableMask]="true"
-    [draggable]="false"
-    [style]="{ width: 'calc(100vw - 2rem)', maxWidth: '28rem' }"
-  >
-    <div class="flex flex-col gap-5">
-      <p class="text-muted">{{ cta.dialogDescription }}</p>
+<ng-template
+  [(tuiDialog)]="dialogVisible"
+  [tuiDialogOptions]="{ label: cta.dialogTitle, size: 's' }"
+>
+  <form class="flex flex-col gap-5" (ngSubmit)="subscribe()" novalidate>
+    <p class="text-muted">{{ cta.dialogDescription }}</p>
 
-      <div class="flex flex-col gap-2">
-        <label for="cta-email" class="font-medium text-chalk">{{ cta.emailLabel }}</label>
+    <div class="flex flex-col gap-1">
+      <tui-textfield iconStart="@tui.mail">
+        <label tuiLabel for="cta-email">{{ cta.emailLabel }}</label>
         <input
-          pInputText
+          tuiInput
           id="cta-email"
+          name="email"
           type="email"
           inputmode="email"
           autocomplete="email"
           [placeholder]="cta.emailPlaceholder"
-          [value]="email()"
-          [attr.aria-invalid]="!!emailError()"
+          [invalid]="!!emailError()"
+          [ngModel]="email()"
+          (ngModelChange)="onEmailInput($event)"
           [attr.aria-describedby]="emailError() ? 'cta-email-error' : null"
-          (input)="onEmailInput($event)"
-          (keyup.enter)="subscribe()"
         />
-        @if (emailError()) {
-          <small id="cta-email-error" class="text-sm font-medium text-red-300">{{ emailError() }}</small>
-        }
-      </div>
-
-      <div class="mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-        <button type="button" class="btn btn-ghost" (click)="dialogVisible.set(false)">
-          {{ cta.cancel }}
-        </button>
-        <button type="button" class="btn btn-primary" (click)="subscribe()">{{ cta.send }}</button>
-      </div>
+      </tui-textfield>
+      <tui-error id="cta-email-error" [error]="emailError()" />
     </div>
-  </p-dialog>
-</section>
+
+    <div class="mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+      <button
+        tuiButton
+        type="button"
+        size="m"
+        appearance="flat-grayscale"
+        (click)="dialogVisible.set(false)"
+      >
+        {{ cta.cancel }}
+      </button>
+      <button tuiButton type="submit" size="m" appearance="primary" iconEnd="@tui.send">
+        {{ cta.send }}
+      </button>
+    </div>
+  </form>
+</ng-template>

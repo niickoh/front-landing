@@ -1,6 +1,6 @@
-<!-- Full-bleed video hero (pattern adapted from 21st.dev "Glass Video Hero") -->
+<!-- Full-bleed video hero -->
 <section
-  class="cut-bottom relative isolate flex min-h-svh flex-col overflow-hidden bg-ink lg:min-h-[min(100svh,60rem)]"
+  class="relative isolate flex min-h-svh flex-col overflow-hidden bg-ink lg:min-h-[min(100svh,60rem)]"
   aria-labelledby="hero-title"
 >
   <div class="absolute inset-0 -z-10" aria-hidden="true">
@@ -24,7 +24,7 @@
         class="absolute inset-0 h-full w-full object-cover opacity-70"
       ></video>
     }
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/30"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent"></div>
   </div>
 
@@ -46,7 +46,7 @@
           <g class="seal-ring">
             <text
               fill="#fbf7f6"
-              font-family="Barlow Condensed, sans-serif"
+              font-family="Archivo, sans-serif"
               font-weight="700"
               font-size="15"
               letter-spacing="1.5"
@@ -61,8 +61,8 @@
             y="122"
             text-anchor="middle"
             fill="#fbf7f6"
-            font-family="Barlow Condensed, sans-serif"
-            font-style="italic"
+            font-family="Archivo, sans-serif"
+            font-stretch="75%"
             font-weight="900"
             font-size="70"
           >
@@ -78,7 +78,7 @@
           style="--rise-delay: 80ms"
         >
           <span class="block">{{ hero.title }}</span>
-          <span class="block lg:pl-[0.9em]">{{ hero.titleAccent }}</span>
+          <span class="block text-red">{{ hero.titleAccent }}</span>
         </h1>
 
         <p
@@ -89,16 +89,22 @@
         </p>
 
         <div
-          class="rise mt-8 flex flex-col gap-4 px-2 sm:flex-row sm:px-0"
+          class="rise mt-8 flex flex-col gap-3 sm:flex-row"
           style="--rise-delay: 300ms"
         >
-          <a routerLink="/videos" class="btn btn-primary">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M7 4.5v15l13-7.5L7 4.5Z" />
-            </svg>
+          <a tuiButton size="l" appearance="primary" iconStart="@tui.play" routerLink="/videos">
             {{ hero.primaryCta }}
           </a>
-          <a routerLink="/quienes-somos" class="btn btn-ghost">{{ hero.secondaryCta }}</a>
+          <a
+            tuiButton
+            size="l"
+            appearance="secondary-grayscale"
+            iconEnd="@tui.arrow-right"
+            routerLink="/quienes-somos"
+            class="backdrop-blur-sm"
+          >
+            {{ hero.secondaryCta }}
+          </a>
         </div>
       </div>
     </div>

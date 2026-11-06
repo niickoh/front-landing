@@ -1,33 +1,55 @@
-<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="videos-title">
+<section class="glow pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="videos-title">
   <div class="page-gutter">
     <div class="max-w-3xl">
-      <h1 id="videos-title" class="display text-[clamp(3rem,11vw,6.5rem)]">{{ videos.title }}</h1>
+      <p class="eyebrow">{{ videos.eyebrow }}</p>
+      <h1 id="videos-title" class="display mt-3 text-[clamp(3rem,11vw,6.5rem)]">{{ videos.title }}</h1>
       <p class="mt-5 max-w-prose text-lg leading-relaxed text-muted">{{ videos.subtitle }}</p>
     </div>
 
-    <div class="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
-      <!-- Event picker: swipeable chips on mobile, sticky list on desktop -->
+    <div class="mt-10 grid grid-cols-1 gap-8 lg:mt-14 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
+      <!-- Event picker: swipeable chips on mobile, sticky card list on desktop -->
       <nav aria-label="Eventos" class="lg:sticky lg:top-24 lg:self-start">
-        <ul class="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
+        <ul class="no-scrollbar -mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:hidden">
           @for (event of videos.events; track event.id) {
             @let isSelected = event.id === selectedEvent().id;
             <li class="shrink-0 snap-start">
               <button
+                tuiChip
                 type="button"
-                (click)="selectEvent(event.id)"
+                size="m"
+                [appearance]="isSelected ? 'primary' : 'neutral'"
                 [attr.aria-pressed]="isSelected"
-                class="group flex min-h-12 w-full items-center gap-4 border-2 px-4 py-2 text-left transition-colors lg:p-2"
-                [class]="isSelected ? 'border-red bg-wine text-chalk' : 'border-line text-muted hover:border-chalk/50 hover:text-chalk'"
+                (click)="selectEvent(event.id)"
+              >
+                {{ event.title }}
+                <span class="ml-1 opacity-75">· {{ event.youtubeLinks.length }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+
+        <ul class="hidden flex-col gap-2 lg:flex">
+          @for (event of videos.events; track event.id) {
+            @let isSelected = event.id === selectedEvent().id;
+            <li>
+              <button
+                type="button"
+                tuiCell
+                tuiAppearance="outline-grayscale"
+                [attr.aria-pressed]="isSelected"
+                class="w-full rounded-2xl! p-2! text-left transition-colors"
+                [class]="isSelected ? 'bg-wine! outline-2! outline-red!' : 'hover:bg-wine/60!'"
+                (click)="selectEvent(event.id)"
               >
                 <img
                   [src]="event.thumbnail"
                   alt=""
                   loading="lazy"
-                  class="hidden aspect-video w-24 shrink-0 object-cover lg:block"
+                  class="aspect-video w-24 shrink-0 rounded-xl object-cover"
                 />
-                <span>
-                  <span class="display block text-xl leading-none">{{ event.title }}</span>
-                  <span class="mt-1 block text-sm">
+                <span tuiTitle>
+                  <span class="display text-xl leading-none text-chalk">{{ event.title }}</span>
+                  <span tuiSubtitle class="text-muted!">
                     {{ event.youtubeLinks.length }}
                     {{ event.youtubeLinks.length === 1 ? 'video' : 'videos' }}
                   </span>
@@ -42,14 +64,18 @@
         @if (selectedEvent(); as event) {
           @if (event.youtubeLinks.length) {
             @if (videoError()) {
-              <p class="mb-6 border-l-4 border-red bg-wine p-4 text-chalk" role="alert">
+              <div tuiNotification appearance="negative" icon="@tui.circle-alert" class="mb-6" role="alert">
                 No pudimos cargar uno de los videos. Ábrelo directamente en YouTube.
-              </p>
+              </div>
             }
-            <ul class="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
+            <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
               @for (videoLink of event.youtubeLinks; track videoLink.url) {
                 <li>
-                  <article>
+                  <article
+                    tuiCardLarge
+                    appearance="outline-grayscale"
+                    class="h-full gap-0! overflow-hidden bg-wine/50! p-0!"
+                  >
                     <iframe
                       [src]="getVideoEmbedUrl(videoLink.url)"
                       [title]="videoLink.title"
@@ -60,18 +86,25 @@
                       (error)="markVideoError()"
                       allowfullscreen
                     ></iframe>
-                    <h2 class="mt-4 text-lg font-semibold text-chalk">{{ videoLink.title }}</h2>
-                    <p class="mt-1 leading-relaxed text-muted">
-                      {{ videoLink.description || videos.fallbackDescription }}
-                    </p>
+                    <div class="p-4 sm:p-5">
+                      <h2 class="text-lg font-bold text-chalk">{{ videoLink.title }}</h2>
+                      <p class="mt-1 leading-relaxed text-muted">
+                        {{ videoLink.description || videos.fallbackDescription }}
+                      </p>
+                    </div>
                   </article>
                 </li>
               }
             </ul>
           } @else {
-            <p class="border-2 border-dashed border-line p-10 text-center text-muted">
-              Este evento aún no tiene videos. Elige otro evento de la lista.
-            </p>
+            <div
+              tuiCardLarge
+              appearance="outline-grayscale"
+              class="items-center border-dashed! p-10! text-center text-muted"
+            >
+              <tui-icon icon="@tui.video" class="text-red" />
+              <p>Este evento aún no tiene videos. Elige otro evento de la lista.</p>
+            </div>
           }
         }
       </div>

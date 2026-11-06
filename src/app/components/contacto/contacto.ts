@@ -1,9 +1,22 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InputText } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
-import { Select } from 'primeng/select';
-import { Message } from 'primeng/message';
+import {
+  TuiButton,
+  TuiCheckbox,
+  TuiError,
+  TuiIcon,
+  TuiInput,
+  TuiTextfield,
+} from '@taiga-ui/core';
+import {
+  TuiAvatar,
+  TuiButtonLoading,
+  TuiChevron,
+  TuiDataListWrapper,
+  TuiSelect,
+  TuiTextarea,
+} from '@taiga-ui/kit';
+import { TuiCardLarge } from '@taiga-ui/layout';
 import { ContactService } from '../../services/contact.service';
 import { NotificationService } from '../../services/notification.service';
 import { ContentService } from '../../services/content.service';
@@ -32,11 +45,31 @@ interface ContactFormErrors {
   aceptaPolitica: string | null;
 }
 
+interface ExperienciaOption {
+  label: string;
+  value: string;
+}
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 @Component({
   selector: 'app-contacto',
-  imports: [FormsModule, InputText, Textarea, Select, Message],
+  imports: [
+    FormsModule,
+    TuiButton,
+    TuiButtonLoading,
+    TuiCheckbox,
+    TuiError,
+    TuiIcon,
+    TuiInput,
+    TuiTextfield,
+    TuiAvatar,
+    TuiChevron,
+    TuiDataListWrapper,
+    TuiSelect,
+    TuiTextarea,
+    TuiCardLarge,
+  ],
   templateUrl: './contacto.html',
 })
 export class Contacto {
@@ -46,11 +79,14 @@ export class Contacto {
   private readonly content = inject(ContentService);
   protected readonly contactSection = this.content.value.contactSection;
 
-  protected readonly experienciaOptions = [
+  protected readonly experienciaOptions: ExperienciaOption[] = [
     { label: 'Principiante', value: 'principiante' },
     { label: 'Intermedio', value: 'intermedio' },
     { label: 'Avanzado', value: 'avanzado' },
   ];
+
+  protected readonly stringifyOption = (option: ExperienciaOption | null): string =>
+    option?.label ?? '';
 
   protected readonly form = signal<ContactFormModel>({
     nombre: '',
@@ -75,6 +111,11 @@ export class Contacto {
     mensaje: false,
     aceptaPolitica: false,
   });
+
+  /** Taiga's select works with the option object; the form keeps only its value. */
+  protected readonly experienciaOption = computed(
+    () => this.experienciaOptions.find((o) => o.value === this.form().experiencia) ?? null,
+  );
 
   protected readonly submitted = signal(false);
   protected readonly isSending = signal(false);
@@ -153,11 +194,15 @@ export class Contacto {
 
   protected onInput(
     field: 'nombre' | 'edad' | 'email' | 'telefono' | 'ciudad' | 'disponibilidad' | 'mensaje',
-    event: Event,
+    value: string | number | null,
   ): void {
-    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    this.updateField(field, target.value as ContactFormModel[typeof field]);
+    this.updateField(field, String(value ?? ''));
     this.markTouched(field);
+  }
+
+  protected onExperienciaChange(option: ExperienciaOption | null): void {
+    this.updateField('experiencia', option?.value ?? null);
+    this.markTouched('experiencia');
   }
 
   protected markTouched(field: keyof ContactFormModel): void {

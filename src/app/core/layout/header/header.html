@@ -1,4 +1,4 @@
-<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/85 backdrop-blur-md">
+<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/80 backdrop-blur-md">
   <nav class="page-gutter flex h-16 items-center justify-between gap-4" aria-label="Principal">
     <a
       [routerLink]="header.logo.href"
@@ -6,83 +6,104 @@
       (click)="closeMenu()"
     >
       <img [src]="header.logo.src" [alt]="header.logo.alt" class="h-10 w-10 object-contain" />
-      <span class="display text-2xl not-italic tracking-wide">{{ brand.full }}</span>
+      <span class="display text-2xl tracking-wide">{{ brand.full }}</span>
     </a>
 
     <ul class="hidden items-center gap-1 md:flex">
       @for (item of navItems; track item.path) {
         <li>
           <a
+            tuiButton
+            size="s"
+            appearance="flat-grayscale"
             [routerLink]="item.path"
-            routerLinkActive="text-chalk! after:scale-x-100!"
+            routerLinkActive="text-chalk! bg-white/10!"
             [routerLinkActiveOptions]="{ exact: item.path === '/' }"
             #rla="routerLinkActive"
             [attr.aria-current]="rla.isActive ? 'page' : null"
-            class="relative inline-flex min-h-11 items-center px-3 font-medium text-muted transition-colors after:absolute after:inset-x-3 after:bottom-2 after:h-0.5 after:origin-left after:scale-x-0 after:bg-red after:transition-transform hover:text-chalk"
+            class="text-muted! normal-case! font-sans! font-semibold! tracking-normal!"
           >
             {{ item.label }}
           </a>
         </li>
       }
-      <li class="ml-4">
-        <a routerLink="/contacto" class="btn btn-primary min-h-10! px-5! text-base!">
-          Contáctanos
-        </a>
+      <li class="ml-3">
+        <a tuiButton size="m" appearance="primary" routerLink="/contacto">Contáctanos</a>
       </li>
     </ul>
 
     <button
+      tuiIconButton
       type="button"
-      class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-chalk md:hidden"
+      size="m"
+      appearance="flat-grayscale"
+      class="-mr-2 md:hidden!"
+      [iconStart]="menuOpen() ? '@tui.x' : '@tui.menu'"
       [attr.aria-expanded]="menuOpen()"
       aria-controls="mobile-menu"
-      [attr.aria-label]="menuOpen() ? 'Cerrar menú' : 'Abrir menú'"
       (click)="toggleMenu()"
     >
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-        @if (menuOpen()) {
-          <path stroke-linecap="round" d="M6 18 18 6M6 6l12 12" />
-        } @else {
-          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h10" />
-        }
-      </svg>
+      {{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}
     </button>
   </nav>
 </header>
 
-<!-- Mobile sheet (pattern adapted from 21st.dev "Classic Header with Sheet Menu") -->
-<div
-  class="fixed inset-0 z-40 bg-black/60 transition-opacity duration-200 md:hidden"
-  [class.opacity-0]="!menuOpen()"
-  [class.pointer-events-none]="!menuOpen()"
-  aria-hidden="true"
-  (click)="closeMenu()"
-></div>
-<div
-  id="mobile-menu"
-  class="fixed inset-y-0 right-0 z-40 flex w-[min(20rem,85vw)] flex-col bg-wine pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-2xl transition-[transform,visibility] duration-300 ease-out md:hidden"
-  [class.translate-x-full]="!menuOpen()"
-  [class.invisible]="!menuOpen()"
-  [attr.inert]="menuOpen() ? null : ''"
->
-  <ul class="flex flex-col px-4">
-    @for (item of navItems; track item.path) {
-      <li class="border-b border-line">
-        <a
-          [routerLink]="item.path"
-          routerLinkActive="text-chalk!"
-          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
-          #rlaMobile="routerLinkActive"
-          [attr.aria-current]="rlaMobile.isActive ? 'page' : null"
-          class="display flex min-h-14 items-center text-3xl text-muted"
-          (click)="closeMenu()"
-        >
-          {{ item.label }}
-        </a>
-      </li>
-    }
-  </ul>
-  <div class="mt-auto px-6">
-    <a routerLink="/contacto" class="btn btn-primary w-full" (click)="closeMenu()">Contáctanos</a>
-  </div>
-</div>
+<!-- Mobile menu: Taiga UI drawer from the right, with backdrop -->
+<ng-template [tuiPopup]="menuOpen()">
+  <tui-drawer
+    id="mobile-menu"
+    direction="end"
+    [overlay]="true"
+    class="w-[min(22rem,88vw)]! md:hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menú"
+    (click)="onDrawerClick($event)"
+  >
+    <div class="-mt-2 mb-2 flex items-center justify-between">
+      <span class="eyebrow">Menú</span>
+      <button
+        tuiIconButton
+        type="button"
+        size="m"
+        appearance="flat-grayscale"
+        iconStart="@tui.x"
+        (click)="closeMenu()"
+      >
+        Cerrar menú
+      </button>
+    </div>
+
+    <ul class="-mx-2 flex flex-col gap-1">
+      @for (item of navItems; track item.path) {
+        <li>
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="bg-white/10 text-chalk! [&_.nav-dot]:opacity-100"
+            [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+            #rlaMobile="routerLinkActive"
+            [attr.aria-current]="rlaMobile.isActive ? 'page' : null"
+            class="flex min-h-14 items-center justify-between rounded-2xl px-4 text-muted transition-colors hover:bg-white/5 hover:text-chalk"
+            (click)="closeMenu()"
+          >
+            <span class="display text-3xl">{{ item.label }}</span>
+            <span class="nav-dot h-2 w-2 rounded-full bg-red opacity-0" aria-hidden="true"></span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <footer class="px-5 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <a
+        tuiButton
+        size="l"
+        appearance="primary"
+        routerLink="/contacto"
+        class="w-full"
+        (click)="closeMenu()"
+      >
+        Contáctanos
+      </a>
+    </footer>
+  </tui-drawer>
+</ng-template>

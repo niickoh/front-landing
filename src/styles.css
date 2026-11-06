@@ -1,12 +1,13 @@
 @import 'tailwindcss';
 
 /*
- * UPAC All Stars: tokens.
- * Black-to-red comes from the club crest; gold is reserved for the 25th-anniversary seal.
+ * UPAC All Stars v3: same crest palette, new type pairing.
+ * Archivo Expanded (display) + Manrope (text, Taiga UI's native face).
+ * Gold stays reserved for the 25th-anniversary seal and focus rings.
  */
 @theme {
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --font-sans: 'Barlow', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Archivo', 'Arial Black', sans-serif;
+  --font-sans: 'Manrope', 'Segoe UI', system-ui, sans-serif;
 
   --color-ink: #120607;
   --color-wine: #23090c;
@@ -17,6 +18,52 @@
   --color-chalk: #fbf7f6;
   --color-muted: #cdb9ba;
   --color-gold: #e9b949;
+}
+
+/* Taiga UI tokens re-tinted to the crest (unlayered so they beat Taiga's dark palette). */
+body[tuiTheme='dark'] {
+  --tui-typography-family-display: var(--font-display);
+  --tui-typography-family-text: var(--font-sans);
+
+  --tui-background-base: #120607;
+  --tui-background-base-alt: #23090c;
+  --tui-background-elevation-1: #23090c;
+  --tui-background-elevation-2: #2f0e11;
+  --tui-background-elevation-3: #3a1316;
+
+  --tui-background-accent-1: #e3121b;
+  --tui-background-accent-1-hover: #c20f17;
+  --tui-background-accent-1-pressed: #a10b12;
+  --tui-background-accent-2: #e9b949;
+  --tui-background-accent-2-hover: #dcaa36;
+  --tui-background-accent-2-pressed: #c99a2c;
+  --tui-text-primary-on-accent-1: #ffffff;
+  --tui-text-primary-on-accent-2: #120607;
+
+  --tui-background-neutral-1: rgb(251 247 246 / 0.06);
+  --tui-background-neutral-1-hover: rgb(251 247 246 / 0.1);
+  --tui-background-neutral-1-pressed: rgb(251 247 246 / 0.14);
+  --tui-background-neutral-2: rgb(251 247 246 / 0.1);
+  --tui-background-neutral-2-hover: rgb(251 247 246 / 0.14);
+  --tui-background-neutral-2-pressed: rgb(251 247 246 / 0.18);
+
+  --tui-text-primary: #fbf7f6;
+  --tui-text-secondary: #cdb9ba;
+  --tui-text-tertiary: #a88b8d;
+  --tui-text-action: #ff6b70;
+  --tui-text-action-hover: #ff8a8f;
+  --tui-text-negative: #ff8a8f;
+  --tui-status-negative: #ff6b70;
+
+  --tui-border-normal: #4a1f22;
+  --tui-border-hover: #6b3a3d;
+  --tui-border-focus: #e9b949;
+
+  --tui-background-selected-text: rgb(227 18 27 / 0.5);
+  --tui-service-backdrop: rgb(0 0 0 / 0.65);
+
+  background: var(--color-ink);
+  color: var(--color-chalk);
 }
 
 @layer base {
@@ -46,14 +93,24 @@
 }
 
 @layer components {
-  /* Forward-leaning display type, like the crest lettering. */
+  /* Archivo Condensed, upright: same proportions as v2's scale, different voice (no slant). */
   .display {
     font-family: var(--font-display);
-    font-style: italic;
+    font-stretch: 75%;
     font-weight: 800;
     text-transform: uppercase;
     line-height: 0.9;
     letter-spacing: -0.005em;
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-red);
   }
 
   .page-gutter {
@@ -75,89 +132,11 @@
     }
   }
 
-  /* Parallelogram buttons: the skew lives on a pseudo-element so focus rings stay intact. */
-  .btn {
-    position: relative;
-    isolation: isolate;
-    display: inline-flex;
-    min-height: 3rem;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.625rem 1.75rem;
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-style: italic;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--btn-fg, var(--color-chalk));
-    cursor: pointer;
-    transition: color 150ms ease;
-  }
-
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    transform: skewX(-12deg);
-    border: 2px solid var(--btn-border, transparent);
-    background: var(--btn-bg, transparent);
-    transition:
-      background-color 150ms ease,
-      border-color 150ms ease;
-  }
-
-  .btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  .btn-primary {
-    --btn-bg: var(--color-red);
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    --btn-bg: var(--color-red-deep);
-  }
-
-  .btn-ghost {
-    --btn-border: color-mix(in srgb, var(--color-chalk) 55%, transparent);
-  }
-
-  .btn-ghost:hover {
-    --btn-bg: color-mix(in srgb, var(--color-chalk) 10%, transparent);
-    --btn-border: var(--color-chalk);
-  }
-
-  .btn-light {
-    --btn-bg: var(--color-chalk);
-    --btn-fg: var(--color-ink);
-  }
-
-  .btn-light:hover {
-    --btn-bg: var(--color-ink);
-    --btn-fg: var(--color-chalk);
-  }
-
-  /* Diagonal cut echoing the crest's star point. */
-  .cut-bottom {
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5rem), 0 100%);
-  }
-
-  .cut-top {
-    clip-path: polygon(0 2.5rem, 100% 0, 100% 100%, 0 100%);
-  }
-
-  @media (min-width: 1024px) {
-    .cut-bottom {
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5rem), 0 100%);
-    }
-
-    .cut-top {
-      clip-path: polygon(0 5rem, 100% 0, 100% 100%, 0 100%);
-    }
+  /* Soft red glow used behind section headers and cards. */
+  .glow {
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, rgb(227 18 27 / 0.18), transparent 60%),
+      var(--color-ink);
   }
 
   /* YouTube iframes cannot use object-fit, so size them to always cover the hero. */
@@ -181,7 +160,7 @@
   }
 }
 
-/* The page's one orchestrated motion moment: the hero entrance + the slowly turning seal. */
+/* The page's one orchestrated motion moment: hero entrance + the slowly turning seal. */
 @keyframes rise {
   from {
     opacity: 0;
@@ -226,15 +205,31 @@
   }
 }
 
-/* PrimeNG: keep form controls readable and on-brand inside the dark theme. */
-.p-dialog {
-  border-radius: 0.25rem;
+/* Taiga UI fine-tuning: controls keep v2's 3rem touch height. */
+body[tuiTheme='dark'] {
+  --tui-height-l: 3rem;
 }
 
-.p-inputtext,
-.p-select,
-.p-textarea {
-  width: 100%;
-  min-height: 3rem;
+[tuiButton] {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+[tuiButton][data-size='l'] {
+  font-size: 1.125rem;
+}
+
+[tuiButton][data-size='m'] {
   font-size: 1rem;
+}
+
+[tuiIconButton] {
+  text-transform: none;
+}
+
+tui-textfield {
+  inline-size: 100%;
 }

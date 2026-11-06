@@ -1,23 +1,29 @@
 import { Injectable, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { TuiNotificationService } from '@taiga-ui/core';
+
+type Appearance = 'positive' | 'info' | 'warning' | 'negative';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-  private readonly messageService = inject(MessageService);
+  private readonly alerts = inject(TuiNotificationService);
 
   success(summary: string, detail?: string): void {
-    this.messageService.add({ severity: 'success', summary, detail, life: 4000 });
+    this.show('positive', summary, detail, 4000);
   }
 
   info(summary: string, detail?: string): void {
-    this.messageService.add({ severity: 'info', summary, detail, life: 4000 });
+    this.show('info', summary, detail, 4000);
   }
 
   warn(summary: string, detail?: string): void {
-    this.messageService.add({ severity: 'warn', summary, detail, life: 4000 });
+    this.show('warning', summary, detail, 4000);
   }
 
   error(summary: string, detail?: string): void {
-    this.messageService.add({ severity: 'error', summary, detail, life: 5000 });
+    this.show('negative', summary, detail, 5000);
+  }
+
+  private show(appearance: Appearance, label: string, detail = '', autoClose: number): void {
+    this.alerts.open(detail, { label, appearance, autoClose }).subscribe();
   }
 }

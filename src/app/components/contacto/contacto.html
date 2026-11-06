@@ -1,4 +1,4 @@
-<section class="bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="contact-title">
+<section class="glow pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="contact-title">
   <div class="page-gutter">
     <div class="max-w-3xl">
       <h1 id="contact-title" class="display text-[clamp(3rem,11vw,6.5rem)]">
@@ -10,46 +10,66 @@
     </div>
 
     <div
-      class="mt-12 grid grid-cols-1 gap-12 lg:mt-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16"
+      class="mt-10 grid grid-cols-1 gap-10 lg:mt-14 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14"
     >
       <!-- On mobile the form comes first: it's why people land on this page. -->
       <aside class="order-last lg:order-first">
         <h2 class="display text-3xl">Canales oficiales</h2>
-        <ul class="mt-4 border-t border-line">
+        <ul
+          tuiCardLarge
+          appearance="outline-grayscale"
+          class="mt-4 gap-1! bg-wine/50! p-2!"
+        >
           @if (contactSection.channels.whatsapp) {
-            <li class="border-b border-line py-4">
-              <span class="block text-sm text-muted">WhatsApp</span>
-              <span class="text-lg font-semibold">{{ contactSection.channels.whatsapp }}</span>
+            <li class="flex min-h-16 items-center gap-3 rounded-2xl px-3 py-2">
+              <span class="shrink-0" tuiAvatar="@tui.message-circle" size="s" appearance="primary"></span>
+              <span class="flex min-w-0 flex-1 flex-col leading-snug">
+                <span class="text-sm text-muted">WhatsApp</span>
+                <span class="font-semibold">{{ contactSection.channels.whatsapp }}</span>
+              </span>
             </li>
           }
           @if (contactSection.channels.email) {
-            <li class="border-b border-line py-4">
-              <span class="block text-sm text-muted">Correo</span>
+            <li>
               <a
                 [href]="'mailto:' + contactSection.channels.email"
-                class="break-all text-lg font-semibold underline decoration-red decoration-2 underline-offset-4 hover:decoration-chalk"
+                class="flex min-h-16 items-center gap-3 rounded-2xl px-3 py-2 transition-colors hover:bg-white/5"
               >
-                {{ contactSection.channels.email }}
+                <span class="shrink-0" tuiAvatar="@tui.mail" size="s" appearance="primary"></span>
+                <span class="flex min-w-0 flex-1 flex-col leading-snug">
+                  <span class="text-sm text-muted">Correo</span>
+                  <span class="break-all font-semibold">{{ contactSection.channels.email }}</span>
+                </span>
+                <tui-icon icon="@tui.arrow-up-right" class="text-muted" />
               </a>
             </li>
           }
           @if (contactSection.channels.instagram) {
-            <li class="border-b border-line py-4">
-              <span class="block text-sm text-muted">Instagram</span>
+            <li>
               <a
                 [href]="contactSection.channels.instagram"
                 target="_blank"
                 rel="noreferrer"
-                class="break-all text-lg font-semibold underline decoration-red decoration-2 underline-offset-4 hover:decoration-chalk"
+                class="flex min-h-16 items-center gap-3 rounded-2xl px-3 py-2 transition-colors hover:bg-white/5"
               >
-                {{ contactSection.channels.instagram.replace('https://', '') }}
+                <span class="shrink-0" tuiAvatar="@tui.camera" size="s" appearance="primary"></span>
+                <span class="flex min-w-0 flex-1 flex-col leading-snug">
+                  <span class="text-sm text-muted">Instagram</span>
+                  <span class="break-all font-semibold">
+                    {{ contactSection.channels.instagram.replace('https://', '') }}
+                  </span>
+                </span>
+                <tui-icon icon="@tui.arrow-up-right" class="text-muted" />
               </a>
             </li>
           }
           @if (contactSection.channels.address) {
-            <li class="border-b border-line py-4">
-              <span class="block text-sm text-muted">Ubicación</span>
-              <span class="text-lg font-semibold">{{ contactSection.channels.address }}</span>
+            <li class="flex min-h-16 items-center gap-3 rounded-2xl px-3 py-2">
+              <span class="shrink-0" tuiAvatar="@tui.map-pin" size="s" appearance="primary"></span>
+              <span class="flex min-w-0 flex-1 flex-col leading-snug">
+                <span class="text-sm text-muted">Ubicación</span>
+                <span class="font-semibold">{{ contactSection.channels.address }}</span>
+              </span>
             </li>
           }
         </ul>
@@ -63,7 +83,9 @@
 
       <form
         id="contact-form"
-        class="scroll-mt-24 border-t-4 border-red bg-wine p-5 sm:p-8"
+        tuiCardLarge
+        appearance="outline-grayscale"
+        class="scroll-mt-24 gap-0! border-t-4! border-t-red! bg-wine! p-5! sm:p-8!"
         (ngSubmit)="onSubmit()"
         novalidate
         aria-labelledby="contact-form-title"
@@ -73,204 +95,211 @@
         </h2>
         <p class="mt-2 text-sm text-muted">Todos los campos son obligatorios.</p>
 
-        <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div class="flex flex-col gap-2">
-            <label for="nombre" class="font-medium">Nombre completo</label>
-            <input
-              pInputText
-              id="nombre"
-              type="text"
-              autocomplete="name"
-              placeholder="Tu nombre completo"
-              [value]="form().nombre"
-              [attr.aria-invalid]="showError('nombre')"
-              [attr.aria-describedby]="showError('nombre') ? 'error-nombre' : null"
-              (input)="onInput('nombre', $event)"
-              (blur)="markTouched('nombre')"
-            />
-            @if (showError('nombre')) {
-              <p-message id="error-nombre" severity="error" size="small" variant="simple">{{
-                errors().nombre
-              }}</p-message>
-            }
+        <div class="mt-8 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+          <div class="flex flex-col gap-1">
+            <tui-textfield>
+              <label tuiLabel for="nombre">Nombre completo</label>
+              <input
+                tuiInput
+                id="nombre"
+                name="nombre"
+                type="text"
+                autocomplete="name"
+                placeholder="Tu nombre completo"
+                [invalid]="showError('nombre')"
+                [ngModel]="form().nombre"
+                (ngModelChange)="onInput('nombre', $event)"
+                (blur)="markTouched('nombre')"
+                [attr.aria-describedby]="showError('nombre') ? 'error-nombre' : null"
+              />
+            </tui-textfield>
+            <tui-error id="error-nombre" [error]="showError('nombre') ? errors().nombre : null" />
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="edad" class="font-medium">Edad</label>
-            <input
-              pInputText
-              id="edad"
-              type="number"
-              inputmode="numeric"
-              min="1"
-              placeholder="18"
-              [value]="form().edad"
-              [attr.aria-invalid]="showError('edad')"
-              [attr.aria-describedby]="showError('edad') ? 'error-edad' : null"
-              (input)="onInput('edad', $event)"
-              (blur)="markTouched('edad')"
-            />
-            @if (showError('edad')) {
-              <p-message id="error-edad" severity="error" size="small" variant="simple">{{
-                errors().edad
-              }}</p-message>
-            }
+          <div class="flex flex-col gap-1">
+            <tui-textfield>
+              <label tuiLabel for="edad">Edad</label>
+              <input
+                tuiInput
+                id="edad"
+                name="edad"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                placeholder="18"
+                [invalid]="showError('edad')"
+                [ngModel]="form().edad"
+                (ngModelChange)="onInput('edad', $event)"
+                (blur)="markTouched('edad')"
+                [attr.aria-describedby]="showError('edad') ? 'error-edad' : null"
+              />
+            </tui-textfield>
+            <tui-error id="error-edad" [error]="showError('edad') ? errors().edad : null" />
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="email" class="font-medium">Correo electrónico</label>
-            <input
-              pInputText
-              id="email"
-              type="email"
-              inputmode="email"
-              autocomplete="email"
-              placeholder="tucorreo@ejemplo.com"
-              [value]="form().email"
-              [attr.aria-invalid]="showError('email')"
-              [attr.aria-describedby]="showError('email') ? 'error-email' : null"
-              (input)="onInput('email', $event)"
-              (blur)="markTouched('email')"
-            />
-            @if (showError('email')) {
-              <p-message id="error-email" severity="error" size="small" variant="simple">{{
-                errors().email
-              }}</p-message>
-            }
+          <div class="flex flex-col gap-1">
+            <tui-textfield iconStart="@tui.mail">
+              <label tuiLabel for="email">Correo electrónico</label>
+              <input
+                tuiInput
+                id="email"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="tucorreo@ejemplo.com"
+                [invalid]="showError('email')"
+                [ngModel]="form().email"
+                (ngModelChange)="onInput('email', $event)"
+                (blur)="markTouched('email')"
+                [attr.aria-describedby]="showError('email') ? 'error-email' : null"
+              />
+            </tui-textfield>
+            <tui-error id="error-email" [error]="showError('email') ? errors().email : null" />
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="telefono" class="font-medium">Teléfono / WhatsApp</label>
-            <input
-              pInputText
-              id="telefono"
-              type="tel"
-              inputmode="tel"
-              autocomplete="tel"
-              placeholder="+56 9 1234 5678"
-              [value]="form().telefono"
-              [attr.aria-invalid]="showError('telefono')"
-              [attr.aria-describedby]="showError('telefono') ? 'error-telefono' : null"
-              (input)="onInput('telefono', $event)"
-              (blur)="markTouched('telefono')"
+          <div class="flex flex-col gap-1">
+            <tui-textfield iconStart="@tui.phone">
+              <label tuiLabel for="telefono">Teléfono / WhatsApp</label>
+              <input
+                tuiInput
+                id="telefono"
+                name="telefono"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="+56 9 1234 5678"
+                [invalid]="showError('telefono')"
+                [ngModel]="form().telefono"
+                (ngModelChange)="onInput('telefono', $event)"
+                (blur)="markTouched('telefono')"
+                [attr.aria-describedby]="showError('telefono') ? 'error-telefono' : null"
+              />
+            </tui-textfield>
+            <tui-error
+              id="error-telefono"
+              [error]="showError('telefono') ? errors().telefono : null"
             />
-            @if (showError('telefono')) {
-              <p-message id="error-telefono" severity="error" size="small" variant="simple">{{
-                errors().telefono
-              }}</p-message>
-            }
           </div>
 
-          <div class="flex flex-col gap-2 sm:col-span-2">
-            <label for="ciudad" class="font-medium">Ciudad / Comuna</label>
-            <input
-              pInputText
-              id="ciudad"
-              type="text"
-              autocomplete="address-level2"
-              placeholder="Tu ciudad o comuna"
-              [value]="form().ciudad"
-              [attr.aria-invalid]="showError('ciudad')"
-              [attr.aria-describedby]="showError('ciudad') ? 'error-ciudad' : null"
-              (input)="onInput('ciudad', $event)"
-              (blur)="markTouched('ciudad')"
-            />
-            @if (showError('ciudad')) {
-              <p-message id="error-ciudad" severity="error" size="small" variant="simple">{{
-                errors().ciudad
-              }}</p-message>
-            }
+          <div class="flex flex-col gap-1 sm:col-span-2">
+            <tui-textfield iconStart="@tui.map-pin">
+              <label tuiLabel for="ciudad">Ciudad / Comuna</label>
+              <input
+                tuiInput
+                id="ciudad"
+                name="ciudad"
+                type="text"
+                autocomplete="address-level2"
+                placeholder="Tu ciudad o comuna"
+                [invalid]="showError('ciudad')"
+                [ngModel]="form().ciudad"
+                (ngModelChange)="onInput('ciudad', $event)"
+                (blur)="markTouched('ciudad')"
+                [attr.aria-describedby]="showError('ciudad') ? 'error-ciudad' : null"
+              />
+            </tui-textfield>
+            <tui-error id="error-ciudad" [error]="showError('ciudad') ? errors().ciudad : null" />
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="experiencia" class="font-medium">Nivel de experiencia</label>
-            <p-select
-              inputId="experiencia"
-              [options]="experienciaOptions"
-              [ngModel]="form().experiencia"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="updateField('experiencia', $event); markTouched('experiencia')"
-              placeholder="Selecciona tu nivel"
-              styleClass="w-full"
-              [attr.aria-invalid]="showError('experiencia')"
-              [attr.aria-describedby]="showError('experiencia') ? 'error-experiencia' : null"
+          <div class="flex flex-col gap-1">
+            <tui-textfield tuiChevron [stringify]="stringifyOption">
+              <label tuiLabel for="experiencia">Nivel de experiencia</label>
+              <input
+                tuiSelect
+                id="experiencia"
+                name="experiencia"
+                placeholder="Selecciona tu nivel"
+                [invalid]="showError('experiencia')"
+                [ngModel]="experienciaOption()"
+                (ngModelChange)="onExperienciaChange($event)"
+                [attr.aria-describedby]="showError('experiencia') ? 'error-experiencia' : null"
+              />
+              <tui-data-list-wrapper *tuiDropdown [items]="experienciaOptions" />
+            </tui-textfield>
+            <tui-error
+              id="error-experiencia"
+              [error]="showError('experiencia') ? errors().experiencia : null"
             />
-            @if (showError('experiencia')) {
-              <p-message id="error-experiencia" severity="error" size="small" variant="simple">{{
-                errors().experiencia
-              }}</p-message>
-            }
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="disponibilidad" class="font-medium">Disponibilidad horaria</label>
-            <input
-              pInputText
-              id="disponibilidad"
-              type="text"
-              placeholder="Ej: Lun a Vie 18:00 - 21:00"
-              [value]="form().disponibilidad"
-              [attr.aria-invalid]="showError('disponibilidad')"
-              [attr.aria-describedby]="showError('disponibilidad') ? 'error-disponibilidad' : null"
-              (input)="onInput('disponibilidad', $event)"
-              (blur)="markTouched('disponibilidad')"
+          <div class="flex flex-col gap-1">
+            <tui-textfield>
+              <label tuiLabel for="disponibilidad">Disponibilidad horaria</label>
+              <input
+                tuiInput
+                id="disponibilidad"
+                name="disponibilidad"
+                type="text"
+                placeholder="Ej: Lun a Vie 18:00 - 21:00"
+                [invalid]="showError('disponibilidad')"
+                [ngModel]="form().disponibilidad"
+                (ngModelChange)="onInput('disponibilidad', $event)"
+                (blur)="markTouched('disponibilidad')"
+                [attr.aria-describedby]="showError('disponibilidad') ? 'error-disponibilidad' : null"
+              />
+            </tui-textfield>
+            <tui-error
+              id="error-disponibilidad"
+              [error]="showError('disponibilidad') ? errors().disponibilidad : null"
             />
-            @if (showError('disponibilidad')) {
-              <p-message id="error-disponibilidad" severity="error" size="small" variant="simple">{{
-                errors().disponibilidad
-              }}</p-message>
-            }
           </div>
         </div>
 
-        <div class="mt-6 flex flex-col gap-2">
-          <label for="mensaje" class="font-medium">Motivación / Mensaje</label>
-          <textarea
-            pTextarea
-            id="mensaje"
-            rows="5"
-            placeholder="Cuéntanos por qué quieres formar parte de UPAC Allstars y qué te motiva a ingresar"
-            [value]="form().mensaje"
-            [attr.aria-invalid]="showError('mensaje')"
-            [attr.aria-describedby]="showError('mensaje') ? 'error-mensaje' : null"
-            (input)="onInput('mensaje', $event)"
-            (blur)="markTouched('mensaje')"
-          ></textarea>
-          @if (showError('mensaje')) {
-            <p-message id="error-mensaje" severity="error" size="small" variant="simple">{{
-              errors().mensaje
-            }}</p-message>
-          }
+        <div class="mt-5 flex flex-col gap-1">
+          <tui-textfield>
+            <label tuiLabel for="mensaje">Motivación / Mensaje</label>
+            <textarea
+              tuiTextarea
+              id="mensaje"
+              name="mensaje"
+              [min]="4"
+              placeholder="Cuéntanos por qué quieres formar parte de UPAC Allstars y qué te motiva a ingresar"
+              [invalid]="showError('mensaje')"
+              [ngModel]="form().mensaje"
+              (ngModelChange)="onInput('mensaje', $event)"
+              (blur)="markTouched('mensaje')"
+              [attr.aria-describedby]="showError('mensaje') ? 'error-mensaje' : null"
+            ></textarea>
+          </tui-textfield>
+          <tui-error id="error-mensaje" [error]="showError('mensaje') ? errors().mensaje : null" />
         </div>
 
-        <div class="mt-6">
+        <div class="mt-6 flex flex-col gap-1">
           <label for="aceptaPolitica" class="flex cursor-pointer items-start gap-3 py-2">
             <input
+              tuiCheckbox
               id="aceptaPolitica"
+              name="aceptaPolitica"
               type="checkbox"
-              class="mt-0.5 h-5 w-5 shrink-0 accent-red"
-              [checked]="form().aceptaPolitica"
+              size="m"
+              class="mt-0.5 shrink-0"
+              [ngModel]="form().aceptaPolitica"
+              (ngModelChange)="updateField('aceptaPolitica', $event); markTouched('aceptaPolitica')"
               [attr.aria-invalid]="showError('aceptaPolitica')"
               [attr.aria-describedby]="showError('aceptaPolitica') ? 'error-politica' : null"
-              (change)="
-                updateField('aceptaPolitica', $any($event.target).checked);
-                markTouched('aceptaPolitica')
-              "
             />
             <span class="text-sm leading-relaxed text-muted">
               Acepto que UPAC Allstars pueda contactarme y usar estos datos únicamente para gestionar
               mi interés en ingresar al equipo.
             </span>
           </label>
-          @if (showError('aceptaPolitica')) {
-            <p-message id="error-politica" severity="error" size="small" variant="simple">{{
-              errors().aceptaPolitica
-            }}</p-message>
-          }
+          <tui-error
+            id="error-politica"
+            [error]="showError('aceptaPolitica') ? errors().aceptaPolitica : null"
+          />
         </div>
 
-        <div class="mt-8 flex flex-col px-2 sm:flex-row sm:justify-end sm:px-0">
-          <button type="submit" class="btn btn-primary" [disabled]="isSending()">
+        <div class="mt-8 flex flex-col sm:flex-row sm:justify-end">
+          <button
+            tuiButton
+            type="submit"
+            size="l"
+            appearance="primary"
+            iconEnd="@tui.send"
+            [loading]="isSending()"
+            [disabled]="isSending()"
+          >
             {{ isSending() ? 'Enviando solicitud…' : 'Enviar solicitud' }}
           </button>
         </div>

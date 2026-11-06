@@ -1,4 +1,4 @@
-<section class="bg-ink py-20 lg:py-28" aria-labelledby="teams-title">
+<section class="glow py-20 lg:py-28" aria-labelledby="teams-title">
   <div class="page-gutter">
     <div class="max-w-2xl">
       <h2 id="teams-title" class="display text-5xl sm:text-6xl lg:text-7xl">
@@ -7,20 +7,26 @@
       <p class="mt-4 text-lg text-muted">Formación, identidad y energía Panthers.</p>
     </div>
 
-    <ul class="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:mt-16 lg:grid-cols-6 lg:gap-x-8">
+    <ul class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:mt-14 lg:grid-cols-6">
       @for (team of teamsSection.teams; track team.id) {
-        <li class="group text-center">
+        <li>
           <div
-            class="mx-auto aspect-square w-full max-w-44 overflow-hidden rounded-full bg-black ring-2 ring-line ring-offset-4 ring-offset-ink transition-shadow duration-200 group-hover:ring-red"
+            tuiCardLarge
+            appearance="outline-grayscale"
+            class="group flex h-full flex-col items-center gap-4! bg-wine/60! p-4! text-center transition-colors hover:bg-wine! sm:p-5!"
           >
-            <img
-              [src]="team.logo || header.logo.src"
-              [alt]="'Logo de ' + team.displayName"
-              loading="lazy"
-              class="h-full w-full object-cover"
-            />
+            <div
+              class="aspect-square w-full max-w-36 overflow-hidden rounded-full bg-black ring-2 ring-line ring-offset-4 ring-offset-wine transition-shadow duration-200 group-hover:ring-red"
+            >
+              <img
+                [src]="team.logo || header.logo.src"
+                [alt]="'Logo de ' + team.displayName"
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <h3 class="display text-2xl leading-none sm:text-[1.75rem]">{{ team.displayName }}</h3>
           </div>
-          <h3 class="display mt-5 text-2xl leading-none sm:text-[1.75rem]">{{ team.displayName }}</h3>
         </li>
       }
     </ul>
