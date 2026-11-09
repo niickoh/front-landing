@@ -28,7 +28,7 @@
         </li>
       }
       <li class="ml-3">
-        <a tuiButton size="m" appearance="primary" routerLink="/contacto">Contáctanos</a>
+        <a tuiButton size="m" appearance="primary" [routerLink]="header.cta.href">{{ header.cta.label }}</a>
       </li>
     </ul>
 
@@ -98,11 +98,11 @@
         tuiButton
         size="l"
         appearance="primary"
-        routerLink="/contacto"
+        [routerLink]="header.cta.href"
         class="w-full"
         (click)="closeMenu()"
       >
-        Contáctanos
+        {{ header.cta.label }}
       </a>
     </footer>
   </tui-drawer>

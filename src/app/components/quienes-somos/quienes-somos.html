@@ -34,6 +34,7 @@
             <img
               [src]="member.photo || about.placeholderImage"
               [alt]="'Foto de ' + member.name"
+              [style.object-position]="member.photoPosition"
               loading="lazy"
               class="aspect-[4/3] w-full bg-ink object-cover sm:aspect-square"
             />

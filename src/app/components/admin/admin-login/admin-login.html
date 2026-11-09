@@ -1,0 +1,74 @@
+<section
+  class="glow flex min-h-svh items-center pt-24 pb-16"
+  aria-labelledby="admin-login-title"
+>
+  <div class="page-gutter flex justify-center">
+    <form
+      tuiCardLarge
+      appearance="outline-grayscale"
+      class="w-full max-w-md gap-0! border-t-4! border-t-red! bg-wine! p-6! sm:p-8!"
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
+      <p class="eyebrow">Panel de administración</p>
+      <h1 id="admin-login-title" class="mt-2">
+        <span class="display chrome-text block text-5xl">Acceso</span>
+        <span class="display display-italic glitter-text block text-5xl leading-[0.9]">Admin</span>
+      </h1>
+      <p class="mt-3 text-sm text-muted">Ingresa para ver las pre-inscripciones de la temporada.</p>
+
+      <div class="mt-8 flex flex-col gap-5">
+        <tui-textfield iconStart="@tui.user">
+          <label tuiLabel for="admin-usuario">Usuario</label>
+          <input
+            tuiInput
+            id="admin-usuario"
+            name="usuario"
+            type="text"
+            autocomplete="username"
+            [ngModel]="usuario()"
+            (ngModelChange)="usuario.set($event ?? ''); error.set(null)"
+          />
+        </tui-textfield>
+
+        <tui-textfield iconStart="@tui.lock">
+          <label tuiLabel for="admin-password">Contraseña</label>
+          <input
+            tuiInput
+            id="admin-password"
+            name="password"
+            autocomplete="current-password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event ?? ''); error.set(null)"
+          />
+          <button
+            tuiIconButton
+            type="button"
+            size="xs"
+            appearance="flat-grayscale"
+            [iconStart]="showPassword() ? '@tui.eye-off' : '@tui.eye'"
+            (click)="showPassword.set(!showPassword())"
+          >
+            {{ showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña' }}
+          </button>
+        </tui-textfield>
+
+        <tui-error [error]="error()" />
+      </div>
+
+      <button
+        tuiButton
+        type="submit"
+        size="l"
+        appearance="primary"
+        iconEnd="@tui.log-in"
+        class="mt-6 w-full"
+        [loading]="isSending()"
+        [disabled]="isSending()"
+      >
+        Ingresar
+      </button>
+    </form>
+  </div>
+</section>

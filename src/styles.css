@@ -151,6 +151,61 @@ body[tuiTheme='dark'] {
     border: 0;
   }
 
+  /*
+   * Tryouts 2027 type kit, lifted from the season posters:
+   * condensed italic Archivo for the sporty slant, chrome headlines,
+   * red "glitter" accent words and slanted red ribbons for dates.
+   */
+  .display-italic {
+    font-style: italic;
+    /* italic glyphs overhang their box; keep the last letter from being clipped by background-clip */
+    padding-inline-end: 0.08em;
+  }
+
+  .tracked-wide {
+    font-family: var(--font-display);
+    font-stretch: 100%;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+
+  .chrome-text {
+    background: linear-gradient(180deg, #ffffff 0%, #ece7e7 42%, #9c9495 52%, #f5f1f1 78%, #cfc8c8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glitter-text {
+    background:
+      radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.55) 0 0.06em, transparent 0.08em) 0 0 / 0.42em 0.42em,
+      radial-gradient(circle at 70% 60%, rgb(255 180 180 / 0.35) 0 0.05em, transparent 0.07em) 0 0 / 0.31em 0.31em,
+      linear-gradient(180deg, #ff4a4f 0%, #e3121b 48%, #8e0a10 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0.04em 0.12em rgb(227 18 27 / 0.45));
+  }
+
+  .ribbon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35em 1.1em;
+    background: linear-gradient(90deg, #a10b12 0%, #e3121b 45%, #ff2a33 100%);
+    color: var(--color-chalk);
+    clip-path: polygon(0.6em 0, 100% 0, calc(100% - 0.6em) 100%, 0 100%);
+  }
+
+  /* Red star dust from the flyers, used as a faint backdrop texture. */
+  .star-dust {
+    background-image:
+      radial-gradient(circle, rgb(227 18 27 / 0.55) 1px, transparent 1.5px),
+      radial-gradient(circle, rgb(251 247 246 / 0.18) 1px, transparent 1.5px);
+    background-size: 2.25rem 2.25rem, 3.5rem 3.5rem;
+    background-position: 0 0, 1.1rem 1.6rem;
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }

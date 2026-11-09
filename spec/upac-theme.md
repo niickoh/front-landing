@@ -1,4 +1,4 @@
-# Inspiración visual UPAc Allstars
+# Inspiración visual UPAC Allstars
 
 ## Referencia de estilo
 Se tomó como punto de partida la energía de una marca deportiva y urbana con identidad fuerte: contrastes marcados, tonos cálidos y una estética que combina rendimiento y presencia visual.

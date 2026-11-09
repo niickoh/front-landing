@@ -10,12 +10,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideTaiga } from '@taiga-ui/core';
 
 import { routes } from './app.routes';
+import { ConfigService } from './core/config/app-config';
 import { ContentService } from './services/content.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideAppInitializer(() => inject(ContentService).load()),
+    // public/config/config.json (URL de la API) y public/content.json se leen antes de la primera pantalla.
+    provideAppInitializer(() => {
+      const config = inject(ConfigService);
+      const content = inject(ContentService);
+      return Promise.all([config.load(), content.load()]).then(() => undefined);
+    }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

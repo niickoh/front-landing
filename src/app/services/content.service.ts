@@ -37,6 +37,8 @@ export class ContentService {
       contactSection: { ...fallback.contactSection, ...remote.contactSection },
       footer: { ...fallback.footer, ...remote.footer },
       videos: { ...fallback.videos, ...remote.videos },
+      tryouts: { ...fallback.tryouts, ...remote.tryouts },
+      inscripcion: { ...fallback.inscripcion, ...remote.inscripcion },
     } as AppContent;
   }
 }

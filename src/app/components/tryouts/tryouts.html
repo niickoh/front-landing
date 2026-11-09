@@ -1,0 +1,289 @@
+<!-- Hero: the flyer's headline stack (chrome "Inscripciones", red glitter "Tryouts") beside the poster -->
+<section
+  class="relative isolate overflow-hidden bg-ink pt-28 pb-20 lg:pt-36 lg:pb-28"
+  aria-labelledby="tryouts-title"
+>
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <img
+      [src]="tryouts.posters.main.src"
+      alt=""
+      class="h-full w-full scale-110 object-cover opacity-20 blur-sm grayscale"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/85 to-ink"></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(50rem_30rem_at_85%_15%,rgb(227_18_27/0.28),transparent_60%)]"
+    ></div>
+    <div class="star-dust absolute inset-y-0 right-0 w-1/2 opacity-40 [mask-image:linear-gradient(to_left,black,transparent)]"></div>
+  </div>
+
+  <div
+    class="page-gutter grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16"
+  >
+    <div class="min-w-0">
+      <p class="eyebrow rise">{{ tryouts.eyebrow }}</p>
+
+      <h1 id="tryouts-title" class="mt-4">
+        <span class="display chrome-text rise block text-[clamp(3rem,12.5vw,7.5rem)]">
+          {{ tryouts.titleTop }}
+        </span>
+        <span
+          class="display display-italic glitter-text rise block text-[clamp(4.25rem,19vw,11rem)] leading-[0.85]"
+          style="--rise-delay: 80ms"
+        >
+          {{ tryouts.titleAccent }}
+        </span>
+      </h1>
+
+      <p
+        class="tracked-wide rise mt-5 text-sm text-chalk/90 sm:text-lg"
+        style="--rise-delay: 160ms"
+      >
+        {{ tryouts.tagline }}
+      </p>
+      <p
+        class="display display-italic rise mt-2 text-5xl text-red sm:text-6xl"
+        style="--rise-delay: 200ms"
+      >
+        {{ tryouts.season }}
+      </p>
+
+      <p
+        class="rise mt-6 max-w-xl text-lg leading-relaxed text-muted"
+        style="--rise-delay: 260ms"
+      >
+        {{ tryouts.intro }}
+      </p>
+
+      <div class="rise mt-8 flex flex-col gap-3 sm:flex-row" style="--rise-delay: 320ms">
+        <a
+          tuiButton
+          size="l"
+          appearance="primary"
+          iconEnd="@tui.arrow-right"
+          [routerLink]="tryouts.formHref"
+        >
+          {{ tryouts.primaryCta }}
+        </a>
+        <a
+          tuiButton
+          size="l"
+          appearance="secondary-grayscale"
+          iconStart="@tui.calendar"
+          routerLink="/tryouts"
+          fragment="fechas"
+          class="backdrop-blur-sm"
+        >
+          {{ tryouts.secondaryCta }}
+        </a>
+      </div>
+    </div>
+
+    <figure class="rise relative mx-auto w-full max-w-sm sm:max-w-md" style="--rise-delay: 200ms">
+      <div
+        class="absolute -inset-4 -z-10 rotate-3 rounded-[2rem] bg-gradient-to-br from-red to-red-deep opacity-80"
+        aria-hidden="true"
+      ></div>
+      <img
+        [src]="tryouts.posters.main.src"
+        [alt]="tryouts.posters.main.alt"
+        width="1080"
+        height="1350"
+        class="-rotate-1 rounded-3xl shadow-2xl shadow-black/60 ring-1 ring-white/10"
+      />
+      <figcaption
+        class="ribbon display display-italic absolute -bottom-5 -left-3 -rotate-3 text-2xl shadow-lg sm:-left-6 sm:text-3xl"
+      >
+        {{ tryouts.dates[0].day }} · {{ tryouts.dates[1].day }}
+        {{ tryouts.dates[0].month.slice(0, 3) }}
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Dates: the flyer's two date blocks, big red day number + chrome time -->
+<section
+  id="fechas"
+  class="glow scroll-mt-16 py-20 lg:py-28"
+  aria-labelledby="dates-title"
+>
+  <div class="page-gutter">
+    <div class="max-w-2xl">
+      <p class="eyebrow">{{ tryouts.datesEyebrow }}</p>
+      <h2 id="dates-title" class="display mt-3 text-5xl sm:text-6xl lg:text-7xl">
+        {{ tryouts.datesTitle }}
+      </h2>
+    </div>
+
+    <ul class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-14 lg:gap-6">
+      @for (date of tryouts.dates; track date.id) {
+        <li
+          class="relative overflow-hidden rounded-3xl border border-line bg-black/50 p-6 sm:p-8"
+        >
+          <div
+            class="star-dust absolute inset-0 -z-0 opacity-20 [mask-image:linear-gradient(to_top_left,black,transparent_60%)]"
+            aria-hidden="true"
+          ></div>
+          <div class="relative">
+            <p class="display text-2xl text-muted">{{ date.weekday }}</p>
+            <div class="mt-2 flex items-end gap-4">
+              <span class="display text-[clamp(6rem,22vw,9rem)] leading-[0.78] text-red">
+                {{ date.day }}
+              </span>
+              <span class="display pb-1 text-3xl leading-[0.95] sm:text-4xl">
+                <span class="block">De</span>
+                <span class="block">{{ date.month }}</span>
+              </span>
+            </div>
+            <div class="mt-5 h-px bg-gradient-to-r from-red via-red/60 to-transparent"></div>
+            <p class="mt-4 flex items-baseline justify-between gap-4">
+              <span class="display display-italic chrome-text text-3xl sm:text-4xl">
+                {{ date.time }}
+              </span>
+              <span class="tracked-wide text-xs text-muted">{{ date.year }}</span>
+            </p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- Enrollment + monthly fees, paired with the season poster -->
+<section class="relative isolate overflow-hidden bg-ink py-20 lg:py-28" aria-labelledby="enrollment-title">
+  <div
+    class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_30rem_at_10%_80%,rgb(227_18_27/0.18),transparent_60%)]"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="page-gutter grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16"
+  >
+    <figure class="order-last mx-auto w-full max-w-sm lg:order-first lg:max-w-none">
+      <img
+        [src]="tryouts.posters.season.src"
+        [alt]="tryouts.posters.season.alt"
+        width="1080"
+        height="1350"
+        loading="lazy"
+        class="rotate-1 rounded-3xl shadow-2xl shadow-black/60 ring-1 ring-white/10"
+      />
+    </figure>
+
+    <div class="min-w-0 text-center lg:text-left">
+      <h2 id="enrollment-title">
+        <span class="display chrome-text block text-[clamp(3rem,10vw,5.5rem)]">
+          {{ tryouts.enrollment.label }}
+        </span>
+        <span class="display block text-[clamp(5.5rem,24vw,12rem)] leading-[0.8] text-red">
+          {{ tryouts.enrollment.highlight }}
+        </span>
+      </h2>
+
+      <p class="mt-5 flex items-center justify-center gap-4 lg:justify-start">
+        <span class="h-0.5 w-10 bg-red sm:w-16" aria-hidden="true"></span>
+        <span class="display text-2xl sm:text-3xl">{{ tryouts.enrollment.note }}</span>
+        <span class="h-0.5 w-10 bg-red sm:w-16" aria-hidden="true"></span>
+      </p>
+
+      <p
+        class="display mt-6 inline-flex rounded-full border-2 border-chalk/80 px-5 py-2 text-xl sm:text-2xl"
+      >
+        {{ tryouts.enrollment.audienceBefore }}&nbsp;<span class="text-red">{{
+          tryouts.enrollment.audienceAccent
+        }}</span>&nbsp;{{ tryouts.enrollment.audienceAfter }}
+      </p>
+
+      <div class="mt-10">
+        <h3 class="ribbon display display-italic text-2xl sm:text-3xl">
+          {{ tryouts.pricing.title }}
+        </h3>
+        <ul class="mt-4 rounded-3xl border border-line bg-black/50 px-5 py-2 text-left sm:px-7">
+          @for (plan of tryouts.pricing.plans; track plan.id) {
+            <li
+              class="flex items-baseline gap-5 border-b border-red/40 py-4 last:border-b-0 sm:gap-8"
+            >
+              <span class="display display-italic w-28 shrink-0 text-2xl text-chalk sm:w-32 sm:text-3xl">
+                {{ plan.price }}
+              </span>
+              <span class="display display-italic text-2xl text-muted sm:text-3xl">
+                {{ plan.name }}
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How to join + season calendar -->
+<section class="glow py-20 lg:py-28" aria-labelledby="steps-title">
+  <div class="page-gutter">
+    <div class="max-w-2xl">
+      <p class="eyebrow">{{ tryouts.stepsEyebrow }}</p>
+      <h2 id="steps-title" class="display mt-3 text-5xl sm:text-6xl lg:text-7xl">
+        {{ tryouts.stepsTitle }}
+      </h2>
+    </div>
+
+    <ol class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mt-14 lg:gap-6">
+      @for (step of tryouts.steps; track step.id; let i = $index) {
+        <li class="rounded-3xl border border-line bg-wine/60 p-6 transition-colors hover:bg-wine sm:p-8">
+          <span class="display display-italic glitter-text text-7xl leading-none" aria-hidden="true">
+            0{{ i + 1 }}
+          </span>
+          <h3 class="display mt-4 text-3xl">{{ step.title }}</h3>
+          <p class="mt-3 leading-relaxed text-muted">{{ step.description }}</p>
+        </li>
+      }
+    </ol>
+
+    <ul class="mt-12 grid grid-cols-1 gap-6 border-t border-line pt-10 md:grid-cols-2">
+      @for (item of tryouts.calendar; track item.id) {
+        <li class="flex gap-3">
+          <span class="display text-3xl leading-none text-red" aria-hidden="true">»</span>
+          <span>
+            <span class="display block text-2xl sm:text-3xl">{{ item.label }}</span>
+            <span class="display display-italic mt-1 block text-xl text-muted sm:text-2xl">
+              {{ item.detail }}
+            </span>
+          </span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- Closing CTA: same red band as the home CTA -->
+<section class="relative isolate overflow-hidden bg-red py-20 lg:py-28" aria-labelledby="tryouts-cta-title">
+  <svg
+    class="absolute -right-24 -bottom-24 -z-10 h-[24rem] w-[24rem] text-red-deep lg:h-[38rem] lg:w-[38rem]"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.6l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9L12 1.5Z" />
+  </svg>
+
+  <div class="page-gutter">
+    <div class="max-w-3xl">
+      <h2 id="tryouts-cta-title" class="display text-5xl text-chalk sm:text-6xl lg:text-7xl">
+        {{ tryouts.closing.title }}
+      </h2>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-chalk/90">
+        {{ tryouts.closing.description }}
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row">
+        <a
+          tuiButton
+          size="l"
+          iconEnd="@tui.arrow-right"
+          [routerLink]="tryouts.formHref"
+          class="bg-chalk! text-ink! hover:bg-ink! hover:text-chalk!"
+        >
+          {{ tryouts.closing.button }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

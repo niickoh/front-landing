@@ -1,0 +1,427 @@
+<section class="glow pt-28 pb-20 lg:pt-36 lg:pb-28" aria-labelledby="inscripcion-title">
+  <div class="page-gutter">
+    <div class="max-w-3xl">
+      <p class="eyebrow">{{ page.eyebrow }}</p>
+      <h1 id="inscripcion-title" class="mt-3">
+        <span class="display chrome-text block text-[clamp(3rem,11vw,6.5rem)]">{{ page.title }}</span>
+        <span
+          class="display display-italic glitter-text block text-[clamp(3rem,11vw,6.5rem)] leading-[0.85]"
+        >
+          {{ page.titleAccent }}
+        </span>
+      </h1>
+      <p class="mt-5 max-w-prose text-lg leading-relaxed text-muted">{{ page.description }}</p>
+    </div>
+
+    <div
+      class="mt-10 grid grid-cols-1 gap-10 lg:mt-14 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14"
+    >
+      <!-- On mobile the form comes first: it's why people land on this page. -->
+      <aside class="order-last flex flex-col gap-4 lg:order-first lg:sticky lg:top-24 lg:self-start">
+        <div class="rounded-3xl border border-red/50 bg-red/10 p-6">
+          <p class="ribbon display display-italic text-xl">{{ page.noticeTitle }}</p>
+          <p class="mt-4 leading-relaxed text-chalk/90">{{ page.notice }}</p>
+        </div>
+
+        <div class="rounded-3xl border border-line bg-black/40 p-6">
+          <p class="eyebrow">{{ page.tryoutsLabel }}</p>
+          <p class="display display-italic chrome-text mt-2 text-3xl">29 · 30 Nov</p>
+          <p class="mt-3 leading-relaxed text-muted">{{ page.tryoutsText }}</p>
+          <a
+            routerLink="/tryouts"
+            class="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-chalk underline-offset-4 hover:underline"
+          >
+            {{ page.tryoutsLink }}
+            <tui-icon icon="@tui.arrow-right" class="text-red" />
+          </a>
+        </div>
+      </aside>
+
+      @if (sent()) {
+        <div
+          tuiCardLarge
+          appearance="outline-grayscale"
+          class="items-start border-t-4! border-t-red! bg-wine! p-6! sm:p-10!"
+          role="status"
+        >
+          <span class="display display-italic glitter-text text-7xl leading-none" aria-hidden="true">
+            ¡Listo!
+          </span>
+          <h2 class="display mt-4 text-4xl sm:text-5xl">{{ page.successTitle }}</h2>
+          <p class="mt-4 max-w-prose text-lg leading-relaxed text-muted">{{ page.successText }}</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a tuiButton size="l" appearance="primary" iconEnd="@tui.arrow-right" routerLink="/tryouts">
+              {{ page.tryoutsLink }}
+            </a>
+            <button
+              tuiButton
+              type="button"
+              size="l"
+              appearance="secondary-grayscale"
+              iconStart="@tui.user-plus"
+              (click)="reset()"
+            >
+              {{ page.successAgain }}
+            </button>
+          </div>
+        </div>
+      } @else {
+        <form
+          id="inscripcion-form"
+          tuiCardLarge
+          appearance="outline-grayscale"
+          class="scroll-mt-24 gap-0! border-t-4! border-t-red! bg-wine! p-5! sm:p-8!"
+          (ngSubmit)="onSubmit()"
+          novalidate
+          aria-labelledby="inscripcion-title"
+        >
+          <p class="text-sm text-muted">Todos los campos son obligatorios.</p>
+
+          <!-- 1. Datos del deportista -->
+          <fieldset class="mt-6">
+            <legend class="display text-3xl sm:text-4xl">{{ page.sections.deportista.title }}</legend>
+            <p class="mt-2 text-sm text-muted">{{ page.sections.deportista.description }}</p>
+
+            <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+              <div class="flex flex-col gap-1 sm:col-span-2">
+                <tui-textfield iconStart="@tui.user">
+                  <label tuiLabel for="nombre_completo">Nombres y Apellidos</label>
+                  <input
+                    tuiInput
+                    id="nombre_completo"
+                    name="nombre_completo"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Ingresa tu nombre completo"
+                    [invalid]="showError('nombre_completo')"
+                    [ngModel]="form().nombre_completo"
+                    (ngModelChange)="onText('nombre_completo', $event)"
+                    (blur)="markTouched('nombre_completo')"
+                    [attr.aria-describedby]="showError('nombre_completo') ? 'error-nombre_completo' : null"
+                  />
+                </tui-textfield>
+                <tui-error
+                  id="error-nombre_completo"
+                  [error]="errorFor('nombre_completo')"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <tui-textfield iconStart="@tui.calendar">
+                  <label tuiLabel for="fecha_nacimiento">Fecha de Nacimiento</label>
+                  <input
+                    tuiInput
+                    id="fecha_nacimiento"
+                    name="fecha_nacimiento"
+                    type="date"
+                    autocomplete="bday"
+                    class="[color-scheme:dark]"
+                    [min]="minFecha"
+                    [max]="maxFecha"
+                    [invalid]="showError('fecha_nacimiento')"
+                    [ngModel]="form().fecha_nacimiento"
+                    (ngModelChange)="onText('fecha_nacimiento', $event)"
+                    (blur)="markTouched('fecha_nacimiento')"
+                    [attr.aria-describedby]="showError('fecha_nacimiento') ? 'error-fecha_nacimiento' : null"
+                  />
+                </tui-textfield>
+                <tui-error
+                  id="error-fecha_nacimiento"
+                  [error]="errorFor('fecha_nacimiento')"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <tui-textfield>
+                  <label tuiLabel for="edad_temporada">Edad cumplida en {{ temporada }}</label>
+                  <input
+                    tuiInput
+                    id="edad_temporada"
+                    name="edad_temporada"
+                    type="text"
+                    [readOnly]="true"
+                    placeholder="Se calcula con tu fecha"
+                    [ngModel]="edad() !== null ? edad() + ' años' : ''"
+                    [invalid]="showError('edad_temporada')"
+                    aria-describedby="hint-edad"
+                  />
+                </tui-textfield>
+                <p id="hint-edad" class="text-xs text-muted">
+                  Edad al 31 de diciembre de {{ temporada }}, calculada automáticamente.
+                </p>
+                <tui-error [error]="errorFor('edad_temporada')" />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 2. Información deportiva -->
+          <fieldset class="mt-10 border-t border-line pt-8">
+            <legend class="sr-only">{{ page.sections.deportiva.title }}</legend>
+            <h2 class="display text-3xl sm:text-4xl" aria-hidden="true">
+              {{ page.sections.deportiva.title }}
+            </h2>
+            <p class="mt-2 text-sm text-muted">{{ page.sections.deportiva.description }}</p>
+
+            <div class="mt-6 flex flex-col gap-6">
+              <div class="flex flex-col gap-2" role="radiogroup" aria-labelledby="label-experiencia">
+                <span id="label-experiencia" class="font-semibold">Experiencia en Cheerleading</span>
+                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  @for (option of experienciaOptions; track option.value) {
+                    <label tuiBlock="m" class="bg-black/30!">
+                      <input
+                        tuiRadio
+                        type="radio"
+                        name="experiencia"
+                        [value]="option.value"
+                        [ngModel]="form().experiencia"
+                        (ngModelChange)="update('experiencia', $event); markTouched('experiencia')"
+                      />
+                      {{ option.label }}
+                    </label>
+                  }
+                </div>
+                <tui-error [error]="errorFor('experiencia')" />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <tui-textfield iconStart="@tui.shield">
+                  <label tuiLabel for="ultimo_equipo">Último Equipo</label>
+                  <input
+                    tuiInput
+                    id="ultimo_equipo"
+                    name="ultimo_equipo"
+                    type="text"
+                    placeholder="Nombre del equipo, año de participación y nivel"
+                    [invalid]="showError('ultimo_equipo')"
+                    [ngModel]="form().ultimo_equipo"
+                    (ngModelChange)="onText('ultimo_equipo', $event)"
+                    (blur)="markTouched('ultimo_equipo')"
+                    aria-describedby="hint-ultimo_equipo"
+                  />
+                </tui-textfield>
+                <p id="hint-ultimo_equipo" class="text-xs text-muted">
+                  Indica el nombre de tu último equipo, año de participación y nivel.
+                </p>
+                <tui-error [error]="errorFor('ultimo_equipo')" />
+              </div>
+
+              <div class="flex flex-col gap-2" role="radiogroup" aria-labelledby="label-rol">
+                <span id="label-rol" class="font-semibold">Rol o Posición</span>
+                <div class="grid grid-cols-3 gap-2">
+                  @for (option of rolOptions; track option.value) {
+                    <label tuiBlock="m" class="bg-black/30!">
+                      <input
+                        tuiRadio
+                        type="radio"
+                        name="rol"
+                        [value]="option.value"
+                        [ngModel]="form().rol"
+                        (ngModelChange)="update('rol', $event); markTouched('rol')"
+                      />
+                      {{ option.label }}
+                    </label>
+                  }
+                </div>
+                <tui-error [error]="errorFor('rol')" />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <tui-textfield iconStart="@tui.award">
+                  <label tuiLabel for="nivel_gimnasia">Nivel de Gimnasia Logrado</label>
+                  <input
+                    tuiInput
+                    id="nivel_gimnasia"
+                    name="nivel_gimnasia"
+                    type="text"
+                    placeholder="Ej: Nivel 2"
+                    [invalid]="showError('nivel_gimnasia')"
+                    [ngModel]="form().nivel_gimnasia"
+                    (ngModelChange)="onText('nivel_gimnasia', $event)"
+                    (blur)="markTouched('nivel_gimnasia')"
+                    aria-describedby="hint-nivel_gimnasia"
+                  />
+                </tui-textfield>
+                <p id="hint-nivel_gimnasia" class="text-xs text-muted">
+                  Indica únicamente el nivel de gimnasia que has logrado.
+                </p>
+                <tui-error [error]="errorFor('nivel_gimnasia')" />
+              </div>
+
+              <div class="flex flex-col gap-2" role="radiogroup" aria-labelledby="label-condicion">
+                <span id="label-condicion" class="font-semibold">
+                  ¿Cuál será tu condición de edad al 31 de diciembre de {{ temporada }}?
+                </span>
+                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  @for (option of condicionOptions; track option.value) {
+                    <label tuiBlock="m" class="bg-black/30!">
+                      <input
+                        tuiRadio
+                        type="radio"
+                        name="condicion_edad"
+                        [value]="option.value"
+                        [ngModel]="condicion()"
+                        [disabled]="true"
+                      />
+                      {{ option.label }}
+                    </label>
+                  }
+                </div>
+                <p class="text-xs text-muted">
+                  Se marca sola con tu fecha de nacimiento y define qué datos de contacto debes completar.
+                </p>
+                <tui-error [error]="errorFor('condicion_edad')" />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 3. Contacto: del deportista (18+) o del apoderado (menores), como el salto del form de Google -->
+          <fieldset class="mt-10 border-t border-line pt-8" aria-live="polite">
+            @switch (condicion()) {
+              @case ('mayor_18') {
+                <legend class="sr-only">{{ page.sections.contacto.title }}</legend>
+                <h2 class="display text-3xl sm:text-4xl" aria-hidden="true">
+                  {{ page.sections.contacto.title }}
+                </h2>
+                <p class="mt-2 text-sm text-muted">{{ page.sections.contacto.description }}</p>
+
+                <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+                  <div class="flex flex-col gap-1">
+                    <tui-textfield iconStart="@tui.phone">
+                      <label tuiLabel for="telefono">Teléfono de Contacto</label>
+                      <input
+                        tuiInput
+                        id="telefono"
+                        name="telefono"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        placeholder="+56912345678"
+                        [invalid]="showError('telefono')"
+                        [ngModel]="form().telefono"
+                        (ngModelChange)="onText('telefono', $event)"
+                        (blur)="markTouched('telefono')"
+                      />
+                    </tui-textfield>
+                    <tui-error [error]="errorFor('telefono')" />
+                  </div>
+
+                  <div class="flex flex-col gap-1">
+                    <tui-textfield iconStart="@tui.mail">
+                      <label tuiLabel for="email">Correo Electrónico</label>
+                      <input
+                        tuiInput
+                        id="email"
+                        name="email"
+                        type="email"
+                        inputmode="email"
+                        autocomplete="email"
+                        placeholder="tucorreo@ejemplo.com"
+                        [invalid]="showError('email')"
+                        [ngModel]="form().email"
+                        (ngModelChange)="onText('email', $event)"
+                        (blur)="markTouched('email')"
+                      />
+                    </tui-textfield>
+                    <tui-error [error]="errorFor('email')" />
+                  </div>
+                </div>
+              }
+              @case ('menor_18') {
+                <legend class="sr-only">{{ page.sections.apoderado.title }}</legend>
+                <h2 class="display text-3xl sm:text-4xl" aria-hidden="true">
+                  {{ page.sections.apoderado.title }}
+                </h2>
+                <p class="mt-2 text-sm text-muted">{{ page.sections.apoderado.description }}</p>
+
+                <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2">
+                  <div class="flex flex-col gap-1 sm:col-span-2">
+                    <tui-textfield iconStart="@tui.user">
+                      <label tuiLabel for="apoderado_nombre">Nombre y Apellidos del Apoderado</label>
+                      <input
+                        tuiInput
+                        id="apoderado_nombre"
+                        name="apoderado_nombre"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Nombre completo del apoderado"
+                        [invalid]="showError('apoderado_nombre')"
+                        [ngModel]="form().apoderado_nombre"
+                        (ngModelChange)="onText('apoderado_nombre', $event)"
+                        (blur)="markTouched('apoderado_nombre')"
+                      />
+                    </tui-textfield>
+                    <tui-error [error]="errorFor('apoderado_nombre')" />
+                  </div>
+
+                  <div class="flex flex-col gap-1">
+                    <tui-textfield iconStart="@tui.phone">
+                      <label tuiLabel for="apoderado_telefono">Teléfono de Contacto del Apoderado</label>
+                      <input
+                        tuiInput
+                        id="apoderado_telefono"
+                        name="apoderado_telefono"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        placeholder="+56912345678"
+                        [invalid]="showError('apoderado_telefono')"
+                        [ngModel]="form().apoderado_telefono"
+                        (ngModelChange)="onText('apoderado_telefono', $event)"
+                        (blur)="markTouched('apoderado_telefono')"
+                      />
+                    </tui-textfield>
+                    <tui-error
+                      [error]="errorFor('apoderado_telefono')"
+                    />
+                  </div>
+
+                  <div class="flex flex-col gap-1">
+                    <tui-textfield iconStart="@tui.mail">
+                      <label tuiLabel for="apoderado_email">Correo Electrónico del Apoderado</label>
+                      <input
+                        tuiInput
+                        id="apoderado_email"
+                        name="apoderado_email"
+                        type="email"
+                        inputmode="email"
+                        autocomplete="email"
+                        placeholder="apoderado@ejemplo.com"
+                        [invalid]="showError('apoderado_email')"
+                        [ngModel]="form().apoderado_email"
+                        (ngModelChange)="onText('apoderado_email', $event)"
+                        (blur)="markTouched('apoderado_email')"
+                      />
+                    </tui-textfield>
+                    <tui-error [error]="errorFor('apoderado_email')" />
+                  </div>
+                </div>
+              }
+              @default {
+                <legend class="display text-3xl sm:text-4xl">3. Datos de Contacto</legend>
+                <p class="mt-3 flex items-start gap-3 rounded-2xl bg-black/30 p-4 text-muted">
+                  <tui-icon icon="@tui.info" class="mt-0.5 shrink-0 text-red" />
+                  {{ page.sections.pendiente }}
+                </p>
+              }
+            }
+          </fieldset>
+
+          <div class="mt-10 flex flex-col sm:flex-row sm:justify-end">
+            <button
+              tuiButton
+              type="submit"
+              size="l"
+              appearance="primary"
+              iconEnd="@tui.send"
+              [loading]="isSending()"
+              [disabled]="isSending()"
+            >
+              {{ isSending() ? page.sending : page.submit }}
+            </button>
+          </div>
+          <p class="sr-only" aria-live="polite">{{ isSending() ? page.sending : '' }}</p>
+        </form>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,59 @@
+<!-- Season banner pointing to /tryouts, styled after the tryout flyers -->
+<section class="bg-ink py-12 lg:py-16" aria-labelledby="tryouts-banner-title">
+  <div class="page-gutter">
+    <div
+      class="relative isolate grid grid-cols-1 overflow-hidden rounded-3xl border border-red/40 bg-gradient-to-br from-red-deep via-wine to-ink md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)]"
+    >
+      <div
+        class="star-dust absolute inset-0 -z-10 opacity-30 [mask-image:linear-gradient(to_right,black,transparent_70%)]"
+        aria-hidden="true"
+      ></div>
+
+      <div class="min-w-0 p-6 sm:p-10 lg:p-12">
+        <p class="eyebrow text-chalk!">{{ banner.eyebrow }}</p>
+
+        <h2 id="tryouts-banner-title" class="mt-3">
+          <span class="display chrome-text block text-[clamp(2.5rem,9vw,4.5rem)]">
+            {{ banner.title }}
+          </span>
+          <span
+            class="display display-italic glitter-text block text-[clamp(3.5rem,14vw,7rem)] leading-[0.85]"
+          >
+            {{ banner.titleAccent }}
+          </span>
+        </h2>
+
+        <p class="ribbon display display-italic mt-6 text-xl sm:text-2xl">{{ banner.dates }}</p>
+        <p class="display display-italic chrome-text mt-3 text-2xl sm:text-3xl">{{ banner.time }}</p>
+
+        <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <a tuiButton size="l" appearance="primary" iconEnd="@tui.arrow-right" routerLink="/tryouts">
+            {{ banner.button }}
+          </a>
+          <span
+            class="display inline-flex rounded-full border-2 border-chalk/70 px-4 py-1.5 text-lg"
+          >
+            {{ banner.badge }}
+          </span>
+        </div>
+      </div>
+
+      <a
+        routerLink="/tryouts"
+        class="relative block h-64 overflow-hidden md:h-auto"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <img
+          [src]="banner.image"
+          alt=""
+          loading="lazy"
+          class="absolute inset-0 h-full w-full object-cover object-[50%_30%] transition-transform duration-500 hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-wine via-transparent to-transparent md:bg-gradient-to-r"
+        ></div>
+      </a>
+    </div>
+  </div>
+</section>
