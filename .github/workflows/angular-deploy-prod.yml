@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
-          por1
+          port: 21
           local-dir: dist/front-landing/browser/
           server-dir: /upacallstarschile.com/
           dangerous-clean-slate: false
