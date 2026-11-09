@@ -2,7 +2,7 @@ name: Angular Deploy (with retries)
 
 on:
   push:
-    branches: ["feature/upac"]
+    branches: ["feature/production"]
   workflow_dispatch:
 
 jobs:
@@ -35,8 +35,8 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
           por1
-          local-dir: dist/front-landit: 2ng/browser/
-          server-dir: /public_html/upacallstars/
+          local-dir: dist/front-landing/browser/
+          server-dir: /upacallstarschile.com/
           dangerous-clean-slate: false
           timeout: 120000
 
@@ -56,7 +56,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: dist/front-landing/browser/
-          server-dir: /public_html/upacallstars/
+          server-dir: /upacallstarschile.com/
           dangerous-clean-slate: false
           timeout: 120000
 
@@ -76,7 +76,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: dist/front-landing/browser/
-          server-dir: /public_html/upacallstars/
+          server-dir: /upacallstarschile.com/
           dangerous-clean-slate: false
           timeout: 120000
 
