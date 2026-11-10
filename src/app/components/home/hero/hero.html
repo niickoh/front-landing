@@ -1,10 +1,18 @@
-<!-- Full-bleed video hero -->
+<!--
+  Video hero. Mobile: the vertical video fills the screen. Desktop: the same <video> becomes a
+  9:16 frame on the right (so it is never upscaled and cropped) over a blurred still of itself.
+  [muted] as a property: Angular sets attributes after creating the element, which the browser ignores for autoplay.
+-->
 <section
   class="relative isolate flex min-h-svh flex-col overflow-hidden bg-ink lg:min-h-[min(100svh,60rem)]"
   aria-labelledby="hero-title"
 >
   <div class="absolute inset-0 -z-10" aria-hidden="true">
-    <img [src]="hero.imageSrc" alt="" class="absolute inset-0 h-full w-full object-cover" />
+    <img
+      [src]="hero.imageSrc"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover lg:scale-110 lg:opacity-60 lg:blur-2xl"
+    />
     @if (youtubeEmbedUrl) {
       <iframe
         [src]="youtubeEmbedUrl"
@@ -16,23 +24,29 @@
       ></iframe>
     } @else if (hero.mediaType === 'video') {
       <video
+        [muted]="true"
+        [autoplay]="autoplay"
+        [poster]="hero.imageSrc"
         [src]="hero.videoSrc"
-        autoplay
         muted
         loop
         playsinline
-        class="absolute inset-0 h-full w-full object-cover opacity-70"
+        preload="metadata"
+        disablepictureinpicture
+        disableremoteplayback
+        tabindex="-1"
+        class="pointer-events-none absolute inset-0 h-full w-full object-cover lg:inset-auto lg:top-28 lg:right-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))] lg:z-10 lg:aspect-[9/16] lg:h-[calc(100%-10.5rem)] lg:w-auto lg:rounded-3xl lg:shadow-[0_24px_60px_-12px_rgb(0_0_0/0.75)] lg:ring-1 lg:ring-white/15"
       ></video>
     }
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/30"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 via-45% to-ink/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/10 via-50% to-transparent"></div>
   </div>
 
-  <div class="page-gutter flex flex-1 flex-col justify-end pt-24 pb-20 lg:pb-32">
-    <div class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+  <div class="page-gutter flex flex-1 flex-col justify-end pt-24 pb-14 lg:pb-20">
+    <div class="grid grid-cols-1 items-end gap-6 lg:pr-[22rem] xl:pr-[30rem]">
       <!-- 25th-anniversary seal: the crest's ring of stars, turned into a medal -->
       <div
-        class="rise order-first w-28 sm:w-36 lg:order-none lg:col-start-2 lg:row-start-1 lg:w-60"
+        class="rise w-20 sm:w-28 lg:w-32"
         role="img"
         [attr.aria-label]="hero.eyebrow + ', ' + hero.proofLabel.toLowerCase()"
       >
@@ -71,10 +85,10 @@
         </svg>
       </div>
 
-      <div class="max-w-4xl">
+      <div class="max-w-2xl">
         <h1
           id="hero-title"
-          class="display rise text-[clamp(3.5rem,15vw,9.5rem)] text-chalk"
+          class="display rise text-[clamp(2.75rem,11vw,6rem)] text-chalk [text-shadow:0_2px_24px_rgb(0_0_0/0.45)]"
           style="--rise-delay: 80ms"
         >
           <span class="block">{{ hero.title }}</span>
@@ -82,22 +96,22 @@
         </h1>
 
         <p
-          class="rise mt-6 max-w-md text-lg leading-relaxed text-chalk/90 sm:text-xl"
+          class="rise mt-4 max-w-sm text-base leading-relaxed text-chalk/90 sm:text-lg"
           style="--rise-delay: 200ms"
         >
           {{ hero.subtitle }}
         </p>
 
         <div
-          class="rise mt-8 flex flex-col gap-3 sm:flex-row"
+          class="rise mt-6 flex flex-col gap-3 sm:flex-row"
           style="--rise-delay: 300ms"
         >
-          <a tuiButton size="l" appearance="primary" iconStart="@tui.play" routerLink="/videos">
+          <a tuiButton size="m" appearance="primary" iconStart="@tui.play" routerLink="/videos">
             {{ hero.primaryCta }}
           </a>
           <a
             tuiButton
-            size="l"
+            size="m"
             appearance="secondary-grayscale"
             iconEnd="@tui.arrow-right"
             routerLink="/quienes-somos"
@@ -109,4 +123,5 @@
       </div>
     </div>
   </div>
+
 </section>

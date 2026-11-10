@@ -19,15 +19,16 @@
   <div
     class="page-gutter grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16"
   >
-    <div class="min-w-0">
+    <!-- @container: the title is sized to this column (cqi), not to the viewport, so it never overflows the grid -->
+    <div class="@container min-w-0">
       <p class="eyebrow rise">{{ tryouts.eyebrow }}</p>
 
       <h1 id="tryouts-title" class="mt-4">
-        <span class="display chrome-text rise block text-[clamp(3rem,12.5vw,7.5rem)]">
+        <span class="display chrome-text rise block text-[clamp(2.25rem,14.5cqi,7.5rem)]">
           {{ tryouts.titleTop }}
         </span>
         <span
-          class="display display-italic glitter-text rise block text-[clamp(4.25rem,19vw,11rem)] leading-[0.85]"
+          class="display display-italic glitter-text rise block text-[clamp(3.25rem,23cqi,11rem)] leading-[0.85]"
           style="--rise-delay: 80ms"
         >
           {{ tryouts.titleAccent }}
