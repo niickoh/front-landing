@@ -15,6 +15,10 @@ export class Hero {
   protected readonly hero = this.content.value.hero;
   protected readonly footer = this.content.value.footer;
 
+  /** Respects reduced motion: the video then stays on its poster. */
+  protected readonly autoplay =
+    !!this.hero.autoplay && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /** Text that runs around the 25th-anniversary seal. */
   protected readonly sealText = `${this.hero.eyebrow} ★ ${this.hero.proofLabel} ★ `;
 

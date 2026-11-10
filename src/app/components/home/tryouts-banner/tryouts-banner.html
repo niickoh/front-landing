@@ -9,15 +9,16 @@
         aria-hidden="true"
       ></div>
 
-      <div class="min-w-0 p-6 sm:p-10 lg:p-12">
+      <!-- @container: title sized to this column (cqi), not the viewport -->
+      <div class="@container min-w-0 p-6 sm:p-10 lg:p-12">
         <p class="eyebrow text-chalk!">{{ banner.eyebrow }}</p>
 
         <h2 id="tryouts-banner-title" class="mt-3">
-          <span class="display chrome-text block text-[clamp(2.5rem,9vw,4.5rem)]">
+          <span class="display chrome-text block text-[clamp(2rem,14.5cqi,4.5rem)]">
             {{ banner.title }}
           </span>
           <span
-            class="display display-italic glitter-text block text-[clamp(3.5rem,14vw,7rem)] leading-[0.85]"
+            class="display display-italic glitter-text block text-[clamp(3rem,23cqi,7rem)] leading-[0.85]"
           >
             {{ banner.titleAccent }}
           </span>
